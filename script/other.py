@@ -1,4 +1,4 @@
-# 处理merged_laucnty_unemployment.csv
+# merged_laucnty_unemployment.csv
 import pandas as pd
 df_un = pd.read_csv("/Users/okuran/Desktop/thesis/processed_data/merged_laucnty_unemployment.csv")
 df_un['fips'] = df_un['fips'].astype(str).str.zfill(5)
