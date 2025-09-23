@@ -7,7 +7,7 @@ library(readr)
 # census_api_key("YOUR_KEY_HERE", install = TRUE)
 # readRenviron("~/.Renviron")
 
-dir <- "/Users/okuran/Desktop/thesis/processed_data"
+dir <- file.path(getwd(), "processed_data")
 
 # ================================
 # variable code
