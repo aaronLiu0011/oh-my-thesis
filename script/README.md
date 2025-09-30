@@ -8,10 +8,10 @@ All scripts follow a **naming convention**:
 where:
 
 - **build**: prefix indicates that the script is used to build, fetch, or preprocess a dataset.  
-- **<source>**: data source (e.g., `acs`, `bea`, `bls`, `noaa`, `sahie`, `saipe`).  
-- **<scope>**: geographical or dataset scope (e.g., `county`, `state`, `real`, `unemp`).  
-- **<variable>**: key variable processed (e.g., `education`, `insurance`, `poverty_rate`).  
-- **<period>** (optional): time period covered (e.g., `2010_2023`, `monthly`).
+- **source**: data source (e.g., `acs`, `bea`, `bls`, `noaa`, `sahie`, `saipe`).  
+- **scope**: geographical or dataset scope (e.g., `county`, `state`, `real`, `unemp`).  
+- **variable**: key variable processed (e.g., `education`, `insurance`, `poverty_rate`).  
+- **period** (optional): time period covered (e.g., `2010_2023`, `monthly`).
 
 ---
 
