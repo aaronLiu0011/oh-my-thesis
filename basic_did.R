@@ -14,7 +14,7 @@ sy <- fread(file.path(dir, "Primary_Secondary_Syphilis_2010_2023.csv"))
 ab <- fread(file.path(dir, "abortion_policies.csv"))
 
 # control
-ue    <- fread(file.path(dir, "merged_laucnty_unemployment.csv"))           # fips, year, unemployment_rate
+ue    <- fread(file.path(dir, "merged_laucnty_unemployment_2010_2023.csv"))           # fips, year, unemployment_rate
 sahie <- fread(file.path(dir, "sahie_county_insured_uninsured_2010_2023.csv"))  # fips, year, uninsured_rate
 saipe <- fread(file.path(dir, "saipe_county_mhi_2010_2023_real2023usd.csv"))    # fips, year, mhi_real2023
 

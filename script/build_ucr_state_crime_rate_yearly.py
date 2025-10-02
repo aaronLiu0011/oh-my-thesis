@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 import time
 
-API_KEY = "u7Ggb8usbOSAoYJMLmg6bYyI9yp32PoRHpz7izxz"  # acquire from https://api.data.gov/signup/
+api_key = ""  # acquire from https://api.data.gov/signup/
 BASE_URL = "https://api.usa.gov/crime/fbi/sapi/api"
 
 state_fips = [
@@ -17,7 +17,7 @@ records = []
 
 for st in state_fips:
     url = f"{BASE_URL}/data/nibrs/violent-crime/offense/states/{st}/rate"
-    params = {"from": 2018, "to": 2024, "API_KEY": API_KEY}
+    params = {"from": 2018, "to": 2024, "API_KEY": api_key}
     
     resp = requests.get(url, params=params)
     if resp.status_code != 200:

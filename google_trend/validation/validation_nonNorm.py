@@ -67,7 +67,7 @@ def merge_and_test(gt_data, cdc_data):
     return merged, results, (r_all, p_all)
 
 if __name__ == "__main__":
-    folder = "/Users/okuran/Desktop/thesis/google_trend/validation"
+    folder = "/Users/okuran/Desktop/thesis/google_trend"
     files_sy = glob.glob(os.path.join(folder, "val_Syphilis_*.csv"))
     files_go = glob.glob(os.path.join(folder, "val_Gonorrhea_*.csv"))
     files_ch = glob.glob(os.path.join(folder, "val_Chlamydia_*.csv"))

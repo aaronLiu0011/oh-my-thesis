@@ -39,7 +39,7 @@ go <- go |>
   )
 
 # x_1: Unemployment rate
-ue <- fread(file.path(data_dir, "merged_laucnty_unemployment.csv"))
+ue <- fread(file.path(data_dir, "merged_laucnty_unemployment_2010_2023.csv"))
 ue <- ue |>
   transmute(
     fips = norm_fips(fips),
