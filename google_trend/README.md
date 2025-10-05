@@ -1,6 +1,7 @@
 # **Google Trends Data Workflow**
 
 **Project Module:** `google_trend`
+
 **Objective:** Validate, collect, and process Google Trends (GT) data as a proxy for CDC STD statistics across U.S. states.
 
 ## **1. Validation: GT as a CDC Proxy**
@@ -35,8 +36,7 @@ Verify whether Google Trends indices for `chlamydia`, `gonorrhea`, and `syphilis
 
 ### **Reference Notebooks**
 
-📄 [`google_trend/validation/validate_cdc_gt.ipynb`](validation/validate_cdc_gt.ipynb)
-📄 [`google_trend/placebo_test`](placebo_test)
+📄 [`google_trend/validation/validate_complete.ipynb`](validation/validate_complete.ipynb)
 
 ## **2. Construction of Cross-State Comparable Metrics**
 
@@ -66,6 +66,7 @@ Follow the anchor-based rescaling approach adapted from:
 ## **3. Time-Series Processing (In Progress)**
 
 Post-validation processing steps (seasonal adjustment, detrending, event-study formatting) will be added in later versions.
+
 📄 *Work-in-progress scripts:* `google_trend/processing/`
 
 ## **4. Supplement: GT Data Collection Notes**
@@ -84,7 +85,7 @@ Post-validation processing steps (seasonal adjustment, detrending, event-study f
 > [!TIP]
 > **Run all Pytrends scripts on Google Colab** to ensure a consistent IP and avoid CAPTCHA or connection resets.
 
-📄 [`google_trend/gt_anchor_based_rescaling_V2.ipynb`](gt_anchor_based_rescaling_V2.ipynb)
+📄 [`google_trend/pytrends_anchor_based_rescaling_V1.ipynb`](pytrends_anchor_based_rescaling_V1.ipynb)
 
 
 ### **2. Multi-State Comparison (Manual Collection)**
@@ -116,6 +117,7 @@ Each URL specifies:
 * **Keyword:** Topic ID (e.g., `%2Fm%2F074m2` for Syphilis)
 
 A complete list of manually constructed URLs is stored in:
+
 📄 [`google_trend/gt_batches_url.txt`](gt_batches_url.txt)
 
 

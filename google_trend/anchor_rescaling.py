@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from glob import glob
 
 
-ROOT_DIR = "/Users/okuran/Desktop/thesis/google_trend/raw_data_gt_group/10-5-2025_Syphilis"
-OUTPUT_PATH = "processed_Syphilis_CA_anchor_scaled.csv"
+ROOT_DIR = "/Users/okuran/Desktop/thesis/google_trend/raw_data_gt_group/10-5-2025_Chlamydia" 
+OUTPUT_PATH = "processed_Chlamydia_CA_anchor_scaled.csv"
 ANCHOR_STATE = "California"
 
 state_fips = {

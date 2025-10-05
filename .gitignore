@@ -32,6 +32,6 @@ __pycache__/
 *.docx
 *.pptx
 
-tempCodeRunnerFile.*
+**/tempCodeRunnerFile.py
 
 temp/
