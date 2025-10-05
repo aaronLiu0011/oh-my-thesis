@@ -103,7 +103,7 @@ Further steps (seasonal adjustment, detrending, event-study preparation) will be
   * Region list
   * Keyword (as topic ID)
 * A complete list of URLs used in this project is available in:
-  📄 [`google_trend/url_batches.txt`](url_batches.txt)
+  📄 [`google_trend/url_batches.txt`](gt_url_batches.txt)
 
 ---
 
