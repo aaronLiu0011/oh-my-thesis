@@ -6,7 +6,8 @@
 # RStudio 项目临时文件夹
 .Rproj.user/
 
-# R 项目文件备份
+# 项目文件
+thesis.code-workspace
 *.Rproj
 
 # Mac 系统生成的临时文件
