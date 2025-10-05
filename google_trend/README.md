@@ -1,6 +1,7 @@
 # **Google Trends Data Workflow**
 
 **Project Module:** `google_trend`
+
 **Objective:** Validate, collect, and process Google Trends (GT) data as a proxy for CDC STD statistics across U.S. states.
 
 ## **1. Validation: GT as a CDC Proxy**
