@@ -3,8 +3,6 @@
 **Project Module:** `google_trend`
 **Objective:** Validate, collect, and process Google Trends (GT) data as a proxy for CDC STD statistics across U.S. states.
 
----
-
 ## **1. Validation: GT as a CDC Proxy**
 
 ### **Goal**
@@ -24,101 +22,123 @@ Verify whether Google Trends indices for `chlamydia`, `gonorrhea`, and `syphilis
 
 2. **Placebo Test**
 
-   * **Purpose:** To ensure that the observed correlation is not spurious or driven by common shocks unrelated to STD trends.
+   * **Purpose:** To confirm that the observed correlation is not spurious or driven by unrelated temporal patterns.
    * **Design:**
 
-     * Replace the true CDC STD data with an unrelated variable (e.g., coffee consumption or random noise series).
-     * Re-run both Pearson correlation and FE regressions using the same specification.
+     * Replace true CDC infection data with an irrelevant series (e.g., coffee consumption or randomly generated noise).
+     * Re-run both Pearson and FE regressions using identical specifications.
    * **Expected Outcome:**
 
-     * No significant correlation should appear in placebo regressions.
-     * Confirms that the GT–CDC correlation is specific to disease-related search behavior.
-   * **Result:** The placebo test yielded insignificant coefficients, reinforcing the robustness of GT as a valid proxy.
+     * Placebo correlations should be statistically insignificant.
+     * Confirms that GT–CDC relationships are disease-specific.
+   * **Result:** Placebo tests show no significant relationship, reinforcing the robustness of GT as a valid proxy.
 
 ### **Reference Notebooks**
 
 📄 [`google_trend/validation/validate_cdc_gt.ipynb`](validation/validate_cdc_gt.ipynb)
-
----
+📄 [`google_trend/placebo_test`](placebo_test)
 
 ## **2. Construction of Cross-State Comparable Metrics**
 
 ### **Problem**
 
-Google Trends indices are *relative* (0–100 scaled) within each query, making them **incomparable across states**.
+Google Trends indices are *relative* (0–100 scaled) within each query, making them incomparable across states.
 
 ### **Solution**
 
-Follow the anchor-based rescaling approach inspired by
-[Analytics Vidhya: *Compare More Than 5 Keywords in Google Trends Using Pytrends*](https://medium.com/analytics-vidhya/compare-more-than-5-keywords-in-google-trends-search-using-pytrends-3462d6b5ad62)
+Follow the anchor-based rescaling approach adapted from:
+[Analytics Vidhya – *Compare More Than 5 Keywords in Google Trends Using Pytrends*](https://medium.com/analytics-vidhya/compare-more-than-5-keywords-in-google-trends-search-using-pytrends-3462d6b5ad62)
 
 ### **Method Summary**
 
-* Select **California (CA)** as the benchmark state.
-* Divide the remaining 50 states into **13 groups** (each group: CA + 4 other states).
-* For each group and each keyword:
+* **Benchmark State:** California (CA)
+* **Grouping:** Divide the other 50 states into **13 groups** (CA + 4 states each)
+* **Process:**
 
-  1. Retrieve Google Trends data.
-  2. Normalize each state’s value by CA’s index within the same query.
-  3. Merge all groups into a unified, comparable dataset.
+  1. Retrieve Google Trends data for each group and keyword
+  2. Normalize each state’s value by California’s
+  3. Merge all batches into one comparable dataset
 
----
+## **3. Time-Series Processing (In Progress)**
 
-## **3. Time-Series Processing (Ongoing)**
-
-Further steps (seasonal adjustment, detrending, event-study preparation) will be implemented in later updates.
-📄 Work-in-progress notebook: *to be added in* `google_trend/processing/`
-
----
+Post-validation processing steps (seasonal adjustment, detrending, event-study formatting) will be added in later versions.
+📄 *Work-in-progress scripts:* `google_trend/processing/`
 
 ## **4. Supplement: GT Data Collection Notes**
 
 ### **0. Nature of GT Data**
 
-* GT indices are **relative** values ranging from 0–100.
-* The peak value (100) represents the maximum search interest *within the selected time and region*.
-* Therefore, direct cross-state comparisons are invalid without rescaling.
+* GT indices are **relative (0–100)** within each query.
+* The peak value 100 represents the maximum search intensity for that query, region, and time.
+* Direct state-to-state comparison is invalid without proper normalization.
 
-### **1. Single-State Collection**
+### **1. Single-State Collection (Using Pytrends)**
 
-* For collecting one state’s data, use **Pytrends**.
-* Reference: [`google_trend/gt_anchor_based_rescaling_V2.ipynb`](gt_anchor_based_rescaling_V2.ipynb)
+> [!NOTE]
+> Pytrends requires a **stable network connection and Google authentication**, which can fail intermittently on local machines.
 
-### **2. Multi-State Comparison**
+> [!TIP]
+> **Run all Pytrends scripts on Google Colab** to ensure a consistent IP and avoid CAPTCHA or connection resets.
 
-* Pytrends does **not support** comparing multiple regions for the *same keyword* in a single automated call.
-* These comparisons must be **collected manually** from the Google Trends interface.
+📄 [`google_trend/gt_anchor_based_rescaling_V2.ipynb`](gt_anchor_based_rescaling_V2.ipynb)
+
+
+### **2. Multi-State Comparison (Manual Collection)**
+
+> [!WARNING]
+> Pytrends does **not support** comparing multiple *regions* for the **same keyword** in one call.
+> You must collect cross-state comparisons **manually** via the Google Trends web interface.
+
+To facilitate this:
+
+* Each comparison query uses the same keyword and includes California (benchmark) + 4 states.
+* 13 total groups cover all 51 regions.
 
 ### **3. Manual Collection via URL**
 
-* Google Trends URLs encode query parameters in a reproducible format.
-  Example pattern:
+> [!NOTE]
+> Google Trends URLs encode all query parameters (date, keyword, and region) and can be reused directly for manual downloads.
 
-  ```
-  https://trends.google.com/trends/explore?date=2018-01-01%202025-08-31&geo=US-CA,US-TX&q=%2Fm%2F074m2
-  ```
-* Each URL corresponds to a specific combination of:
+Example format:
 
-  * Time range
-  * Region list
-  * Keyword (as topic ID)
-* A complete list of URLs used in this project is available in:
-  📄 [`google_trend/url_batches.txt`](gt_url_batches.txt)
+```
+https://trends.google.com/trends/explore?date=2018-01-01%202025-08-31&geo=US-CA,US-TX&q=%2Fm%2F074m2
+```
 
----
+Each URL specifies:
+
+* **Time period:** 2018–2025
+* **Regions:** e.g., `US-CA,US-TX`
+* **Keyword:** Topic ID (e.g., `%2Fm%2F074m2` for Syphilis)
+
+A complete list of manually constructed URLs is stored in:
+📄 [`google_trend/gt_url_batches.txt`](gt_url_batches.txt)
+
 
 ## **5. File Structure Overview**
 
 ```
 google_trend/
 │
-├── validation/
-│   └── validate_cdc_gt.ipynb      # GT-CDC proxy validation
+├── CDC/                              # CDC ground truth infection data
 │
-├── processing/
-│   └── (planned) time-series processing scripts
+├── placebo_test/                     # Placebo tests verifying robustness
 │
-├── gt_anchor_based_rescaling_V2.ipynb  # Single-state collection using Pytrends
+├── raw_data_gt_group/                # GT data (group-level collection: CA + 4 states)
 │
-└── gt_url_batches.txt                 # Manually constructed GT URLs for state comparisons
+├── raw_data_gt_single/               # GT data (single-state Pytrends collection)
+│
+├── validation/                       # Validation notebooks and results
+│   └── validate_cdc_gt.ipynb
+│
+├── DMA_FIPS_County_Mapping.csv       # County–FIPS–DMA mapping table
+│
+├── gt_anchor_based_rescaling_V1.ipynb  # Initial rescaling prototype
+├── gt_anchor_based_rescaling_V2.ipynb  # Finalized single-state collection
+│
+├── gTrend.ipynb                      # Core workflow integrating data and normalization
+│
+├── GTScraper.py                      # Utility for GT scraping (under development)
+│
+└── README.md                         # This documentation
 ```
