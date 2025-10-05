@@ -63,13 +63,13 @@ if "Group1" not in california_means:
 anchor_mean = california_means["Group1"]
 
 # === Step 4: Compute scaling ratios relative to Group1 ===
-normalizationFactor = {g: v / anchor_mean for g, v in california_means.items()}
+scaling_factor = {g: v / anchor_mean for g, v in california_means.items()}
 print("\nScaling ratios (California as anchor):")
-for g, r in normalizationFactor.items():
+for g, r in scaling_factor.items():
     print(f"{g}: {r:.3f}")
 
 # === Step 5: Apply scaling ratios to all values ===
-data["value_scaled"] = data.apply(lambda row: row["value"] / normalizationFactor[row["Group"]], axis=1)
+data["value_scaled"] = data.apply(lambda row: row["value"] / scaling_factor[row["Group"]], axis=1)
 # Keep only Group1 for California
 data = data[~((data["State"] == ANCHOR_STATE) & (data["Group"] != "Group1"))]
 
