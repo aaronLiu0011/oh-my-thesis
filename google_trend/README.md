@@ -59,6 +59,10 @@ Follow the anchor-based rescaling approach adapted from:
   2. Normalize each state’s value by California’s
   3. Merge all batches into one comparable dataset
 
+### **Reference Notebooks**
+
+📄 [`google_trend/anchor_rescaling.py`](anchor_rescaling.py)
+
 ## **3. Time-Series Processing (In Progress)**
 
 Post-validation processing steps (seasonal adjustment, detrending, event-study formatting) will be added in later versions.

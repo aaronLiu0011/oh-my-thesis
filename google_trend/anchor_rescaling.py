@@ -79,12 +79,3 @@ data.to_csv(OUTPUT_PATH, index=False)
 
 print(f"\n✅ Scaled dataset saved to: {OUTPUT_PATH}")
 
-# === Optional: Plot example states ===
-STATES_TO_PLOT = ["California", "Texas", "New York", "Florida", "Washington"]
-df_sel = df[df["State"].isin(STATES_TO_PLOT)]
-plt.title("Google Trends (Rescaled by California Anchor)", fontsize=14)
-plt.xlabel("Month")
-plt.ylabel("Search Index (Rescaled)")
-plt.legend(title="State", bbox_to_anchor=(1.05, 1), loc="upper left")
-plt.tight_layout()
-plt.grid(alpha=0.3)
