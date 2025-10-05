@@ -1,157 +1,124 @@
-# **Standard Operating Procedure (SOP): Analyzing the Impact of US Abortion Laws on STD-Related Search Behavior Using Google Trends**
+# **Google Trends Data Workflow**
 
-**Version**: 1.0
-**Date**: September 17, 2025
+**Project Module:** `google_trend`
+**Objective:** Validate, collect, and process Google Trends (GT) data as a proxy for CDC STD statistics across U.S. states.
 
-## **1.0 Research Objective & Core Hypothesis**
+---
 
-  * **1.1 Objective**: To systematically evaluate the specific impact of differentiated state-level abortion policies on public search interest in Sexually Transmitted Diseases (STDs) following the overturning of Roe v. Wade in June 2022.
-  * **1.2 Hypothesis**: Compared to states where abortion rights are protected, states where abortion rights are restricted or banned will exhibit significant changes in public search interest for STDs (after normalization and calibration).
+## **1. Validation: GT as a CDC Proxy**
 
-## **2.0 Definition of Key Terms**
+### **Goal**
 
-  * **GFT Index**: The raw, relative search interest value (0-100) downloaded directly from Google Trends.
-  * **Benchmark State**: A fixed, high-population state used as a constant reference in every GFT query. **Selected for this project: California (CA)**.
-  * **Anchor Term**: A high-volume, universal, and non-topically related term used to calibrate for general search activity across different regions and times. **Selected for this project: `Weather` (Topic)**.
-  * **Normalized Index**: The ratio of a state's GFT Index to the Benchmark State's GFT Index, which solves the problem of cross-state comparability.
-  * **Calibrated Index**: The final core metric used in this study. It is calculated by dividing the target keyword's "Normalized Index" by the anchor term's "Normalized Index," reflecting the "proportional share of specific interest."
-  * **Ground Truth Data**: The official, authoritative data used for validation. **For this project: Annual STD infection rates by state, published by the U.S. CDC**.
+Verify whether Google Trends indices for `chlamydia`, `gonorrhea`, and `syphilis` can serve as valid proxies for CDC-reported STD incidence.
 
-## **3.0 Required Tools & Data Sources**
+### **Methods**
 
-  * **Software**: Spreadsheet software (Microsoft Excel or Google Sheets).
-  * **Data Sources**:
-      * Google Trends ([https://trends.google.com](https://trends.google.com))
-      * U.S. CDC STD Data & Statistics ([https://www.cdc.gov/std/statistics/](https://www.google.com/search?q=https://www.cdc.gov/std/statistics/))
+1. **Primary Validation**
 
------
+   * **Statistical Tests:**
 
-## **4.0 Experimental Procedure**
+     * *Pearson correlation coefficient (r)* between annualized GT index and CDC incidence.
+     * *Two-way Fixed Effects (FE) regression model* controlling for state and year effects.
+   * **Data Range:** 2018–2023
+   * **Result:** A consistently strong positive correlation confirms that GT search indices reflect real-world STD infection patterns, validating GT as a proxy variable.
 
-The experiment is divided into four main phases: Validation, Collection, Processing, and Analysis. **Please execute these phases in strict sequential order.**
+2. **Placebo Test**
 
-### **Phase I: Pilot Validation Study**
+   * **Purpose:** To ensure that the observed correlation is not spurious or driven by common shocks unrelated to STD trends.
+   * **Design:**
 
-**The goal of this phase is to confirm the validity of GFT data as a proxy for real-world infection rates. If this phase fails, the entire project must be re-evaluated.**
+     * Replace the true CDC STD data with an unrelated variable (e.g., coffee consumption or random noise series).
+     * Re-run both Pearson correlation and FE regressions using the same specification.
+   * **Expected Outcome:**
 
-  * **4.1.1 Obtain Ground Truth Data**:
+     * No significant correlation should appear in placebo regressions.
+     * Confirms that the GT–CDC correlation is specific to disease-related search behavior.
+   * **Result:** The placebo test yielded insignificant coefficients, reinforcing the robustness of GT as a valid proxy.
 
-    1.  Visit the CDC website and locate the STD Surveillance data tables.
-    2.  Download the **rates per 100,000 population** for **Chlamydia**, **Gonorrhea**, and **Syphilis** by state, from 2018 to the latest available year.
-    3.  Organize this data into a table with the columns: `Year`, `State`, `Disease`, `Infection_Rate`.
+### **Reference Notebooks**
 
-  * **4.1.2 Select the Pilot Sample**:
+📄 [`google_trend/validation/validate_cdc_gt.ipynb`](google_trend/validation/validate_cdc_gt.ipynb)
 
-      * **Keyword Sample**: `Chlamydia` (Topic), `Gonorrhea` (Topic), `Syphilis` (Disease).
-      * **State Sample**: `California` (Benchmark), `Texas`, `Florida`, `Illinois`, `Washington`, `Wyoming`, `New York`.
+---
 
-  * **4.1.3 Collect Pilot GFT Data**:
+## **2. Construction of Cross-State Comparable Metrics**
 
-    1.  **For the 3 keywords and 7 states sampled above ONLY**, strictly follow the **full data collection methodology outlined in Phase II** (see 4.2.3) to collect monthly GFT data from January 1, 2018, to the present.
-    2.  Simultaneously, collect the GFT data for the anchor term `Weather` for these same 7 states.
+### **Problem**
 
-  * **4.1.4 Process Pilot Data and Conduct Correlation Analysis**:
+Google Trends indices are *relative* (0–100 scaled) within each query, making them **incomparable across states**.
 
-    1.  For the collected pilot GFT data, complete the **data processing steps from Phase III** (see 4.3) to calculate the monthly **Calibrated Index** for each sample state.
-    2.  **Aggregate the monthly Calibrated Index into an annual average** to get the `Annual_Calibrated_Index`.
-    3.  For each disease, perform a **Pearson correlation analysis (*r*)** between the `Annual_Calibrated_Index` and the CDC's `Infection_Rate`.
+### **Solution**
 
-  * **4.1.5 Make a "Go/No-Go" Decision**:
+Follow the anchor-based rescaling approach inspired by
+[Analytics Vidhya: *Compare More Than 5 Keywords in Google Trends Using Pytrends*](https://medium.com/analytics-vidhya/compare-more-than-5-keywords-in-google-trends-search-using-pytrends-3462d6b5ad62)
 
-      * If **r \> 0.4** (moderate to strong positive correlation): Validation is successful. **Proceed to Phase II**.
-      * If **r \< 0.4** (weak or no correlation): Validation has failed. **Halt the project** or return to redesign the keywords (e.g., attempt to validate behavioral terms like `STD testing` instead).
+### **Method Summary**
 
-### **Phase II: Full-Scale Data Collection**
+* Select **California (CA)** as the benchmark state.
+* Divide the remaining 50 states into **13 groups** (each group: CA + 4 other states).
+* For each group and each keyword:
 
-**Assuming Phase I was successful, begin the systematic data collection for all target states and keywords.**
+  1. Retrieve Google Trends data.
+  2. Normalize each state’s value by CA’s index within the same query.
+  3. Merge all groups into a unified, comparable dataset.
 
-  * **4.2.1 Prepare the Master Datasheet**:
+---
 
-      * Create a master worksheet in your spreadsheet software with the columns: `Date` (YYYY-MM), `State`, `Keyword`, `GFT_Index`.
+## **3. Time-Series Processing (Ongoing)**
 
-  * **4.2.2 Define Keywords and State Groups**:
+Further steps (seasonal adjustment, detrending, event-study preparation) will be implemented in later updates.
+📄 Work-in-progress notebook: *to be added in* `google_trend/processing/`
 
-      * **Keyword List**: See Appendix A.
-      * **State Grouping**: Divide the 50 regions (states + D.C.) other than California into 13 groups of 4. See Appendix B for an example.
+---
 
-  * **4.2.3 Execute Systematic Data Collection (Looping Process)**:
+## **4. Supplement: GT Data Collection Notes**
 
-    1.  **Outer Loop (By Keyword)**: Select the first keyword from your list (e.g., `Syphilis`).
-    2.  **Inner Loop (By State Group)**: Select the first group of states (e.g., `Alabama`, `Alaska`, `Arizona`, `Arkansas`).
-    3.  **GFT Operation**:
-          * Go to Google Trends.
-          * Search Term: `"Syphilis"` (Topic: Disease).
-          * Region: United States.
-          * Time Period: `2018-01-01` to Present.
-          * In the "Compare by sub-region" module, enter `California` and the 4 states from the current group.
-    4.  **Download and Save**:
-          * Download the monthly time-series data as a CSV file.
-          * **Strictly adhere to the naming convention**: `Keyword_StateGroup_DateRange.csv` (e.g., `Syphilis_Group1_2018-Present.csv`).
-    5.  **Repeat**: Repeat steps 3-4 for all state groups. After completing one keyword, return to step 1 and select the next keyword, continuing until data for all keywords (including the anchor term `Weather`) have been collected.
+### **0. Nature of GT Data**
 
-### **Phase III: Data Cleaning and Processing**
+* GT indices are **relative** values ranging from 0–100.
+* The peak value (100) represents the maximum search interest *within the selected time and region*.
+* Therefore, direct cross-state comparisons are invalid without rescaling.
 
-**The goal of this phase is to consolidate all raw data files into a single, clean master dataset ready for analysis.**
+### **1. Single-State Collection**
 
-  * **4.3.1 Consolidate Raw Data**:
+* For collecting one state’s data, use **Pytrends**.
+* Reference: [`google_trend/gt_anchor_based_rescaling_V2.ipynb`](google_trend/gt_anchor_based_rescaling_V2.ipynb)
 
-      * Systematically copy-paste or use a script to import the data from all downloaded CSV files into your master datasheet.
+### **2. Multi-State Comparison**
 
-  * **4.3.2 Calculate the Normalized Index**:
+* Pytrends does **not support** comparing multiple regions for the *same keyword* in a single automated call.
+* These comparisons must be **collected manually** from the Google Trends interface.
 
-    1.  Add a new column to your master datasheet: `Normalized_Index`.
-    2.  For each row, find the `GFT_Index` of the benchmark state (CA) for the same date and keyword.
-    3.  Apply the formula: $$Normalized\_Index = \frac{\text{Current Row's GFT\_Index}}{\text{Corresponding Benchmark State's GFT\_Index}}$$
-    4.  Perform this calculation for all target keywords and the anchor term.
+### **3. Manual Collection via URL**
 
-  * **4.3.3 Calculate the Final Calibrated Index**:
+* Google Trends URLs encode query parameters in a reproducible format.
+  Example pattern:
 
-    1.  Add a final column to your master datasheet: `Calibrated_Index`.
-    2.  For each row (representing a target keyword), find the `Normalized_Index` of the **anchor term `Weather`** for the same date and state.
-    3.  Apply the formula: $$Calibrated\_Index = \frac{\text{Target Keyword's Normalized\_Index}}{\text{Anchor Term 'Weather's' Normalized\_Index}}$$
-    4.  Once completed, the `Calibrated_Index` column is your final core metric for analysis.
+  ```
+  https://trends.google.com/trends/explore?date=2018-01-01%202025-08-31&geo=US-CA,US-TX&q=%2Fm%2F074m2
+  ```
+* Each URL corresponds to a specific combination of:
 
-### **Phase IV: Analysis and Interpretation**
+  * Time range
+  * Region list
+  * Keyword (as topic ID)
+* A complete list of URLs used in this project is available in:
+  📄 [`google_trend/url_batches.txt`](google_trend/url_batches.txt)
 
-**This phase involves the actual research analysis.**
+---
 
-  * **4.4.1 Data Visualization**:
-      * Plot the time-series of the `Calibrated_Index` for various states to visually inspect for changes around June 2022.
-  * **4.4.2 Statistical Analysis**:
-      * Employ an **Interrupted Time Series Analysis (ITSA)** to assess the "breakpoint" effect of the policy change.
-      * Use a **Difference-in-Differences (DiD)** model to compare the change in `Calibrated_Index` between states with strict abortion laws (treatment group) and states with lenient laws (control group) before and after the policy change.
-  * **4.4.3 Interpretation of Results**:
-      * Based on the statistical analysis, explain whether the changes in abortion laws are statistically associated with significant changes in public search interest for STDs.
+## **5. File Structure Overview**
 
------
-
-## **5.0 Data Management and Quality Control**
-
-  * **File Naming Convention**: Strictly follow the file naming rules mentioned in section 4.2.3.
-  * **Version Control**: Regularly back up your master datasheet (e.g., `MasterData_v1.0.xlsx`, `MasterData_v2.0.xlsx`).
-  * **Quality Checks**: At each stage of data processing, randomly select a few states and dates and perform the calculations manually to verify the accuracy of your formulas.
-
-## **6.0 Limitations Statement**
-
-In the final research paper, you must acknowledge the inherent limitations of this methodology:
-
-  * Search interest does not perfectly equate to real-world behavior or cases.
-  * External events, such as media coverage, can confound search trends.
-  * The Ecological Fallacy: Regional-level trends do not necessarily apply to individuals.
-
------
-
-## **Appendices**
-
-### **Appendix A: Suggested Keyword List (Topics preferred)**
-
-  * **Core Diseases**: `Syphilis`, `Chlamydia`, `Gonorrhea`, `Herpes`, `HIV`
-  * **Behavior & Prevention**: `STD testing`, `Get tested`, `Condom`, `STD symptoms`
-  * **Anchor Term**: `Weather`
-
-### **Appendix B: State Grouping Example**
-
-  * **Group 1**: CA, AL, AK, AZ, AR
-  * **Group 2**: CA, CO, CT, DE, FL
-  * **Group 3**: CA, GA, HI, ID, IL
-  * ...and so on, until all regions are covered.
+```
+google_trend/
+│
+├── validation/
+│   └── validate_cdc_gt.ipynb      # GT-CDC proxy validation
+│
+├── processing/
+│   └── (planned) time-series processing scripts
+│
+├── gt_anchor_based_rescaling_V2.ipynb  # Single-state collection using Pytrends
+│
+└── gt_url_batches.txt                 # Manually constructed GT URLs for state comparisons
+```
