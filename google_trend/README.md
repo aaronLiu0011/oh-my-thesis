@@ -37,7 +37,7 @@ Verify whether Google Trends indices for `chlamydia`, `gonorrhea`, and `syphilis
 
 ### **Reference Notebooks**
 
-📄 [`google_trend/validation/validate_cdc_gt.ipynb`](google_trend/validation/validate_cdc_gt.ipynb)
+📄 [`google_trend/validation/validate_cdc_gt.ipynb`](validation/validate_cdc_gt.ipynb)
 
 ---
 
@@ -82,7 +82,7 @@ Further steps (seasonal adjustment, detrending, event-study preparation) will be
 ### **1. Single-State Collection**
 
 * For collecting one state’s data, use **Pytrends**.
-* Reference: [`google_trend/gt_anchor_based_rescaling_V2.ipynb`](google_trend/gt_anchor_based_rescaling_V2.ipynb)
+* Reference: [`google_trend/gt_anchor_based_rescaling_V2.ipynb`](gt_anchor_based_rescaling_V2.ipynb)
 
 ### **2. Multi-State Comparison**
 
@@ -103,7 +103,7 @@ Further steps (seasonal adjustment, detrending, event-study preparation) will be
   * Region list
   * Keyword (as topic ID)
 * A complete list of URLs used in this project is available in:
-  📄 [`google_trend/url_batches.txt`](google_trend/url_batches.txt)
+  📄 [`google_trend/url_batches.txt`](url_batches.txt)
 
 ---
 
