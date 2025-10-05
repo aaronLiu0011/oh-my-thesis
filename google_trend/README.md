@@ -112,7 +112,7 @@ Each URL specifies:
 * **Keyword:** Topic ID (e.g., `%2Fm%2F074m2` for Syphilis)
 
 A complete list of manually constructed URLs is stored in:
-📄 [`google_trend/gt_url_batches.txt`](gt_url_batches.txt)
+📄 [`google_trend/gt_batches_url.txt`](gt_batches_url.txt)
 
 
 ## **5. File Structure Overview**
