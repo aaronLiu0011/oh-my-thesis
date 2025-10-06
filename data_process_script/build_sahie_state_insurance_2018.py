@@ -4,10 +4,11 @@ import pandas as pd
 # SAHIE API
 url = "https://api.census.gov/data/timeseries/healthins/sahie"
 
-# 参数：
+# Params：
 # - AGECAT=2: 18-64 years
 # - IPRCAT=0: all income levels
 # - PCTIC_PT = insured rate, PCTUI_PT = uninsured rate
+
 params = {
     "get": "NAME,PCTIC_PT,PCTUI_PT",
     "for": "state:*",

@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 from glob import glob
 
 
-ROOT_DIR = "/Users/okuran/Desktop/thesis/google_trend/raw_data_gt_group/10-5-2025_Chlamydia" 
-OUTPUT_PATH = "processed_Chlamydia_CA_anchor_scaled.csv"
+ROOT_DIR = "/Users/okuran/Desktop/thesis/google_trend/raw_data_gt_group/10-5-2025_Syphilis" 
+OUTPUT_PATH = "processed_Syphilis_CA_anchor_scaled.csv"
 ANCHOR_STATE = "California"
 
 state_fips = {
     "Alabama": "01", "Alaska": "02", "Arizona": "04", "Arkansas": "05", "California": "06", "Colorado": "08",
-    "Connecticut": "09", "Delaware": "10", "Florida": "12", "Georgia": "13", "Hawaii": "15", "Idaho": "16",
+    "Connecticut": "09", "Delaware": "10", "District of Columbia": "11", "Florida": "12", "Georgia": "13", "Hawaii": "15", "Idaho": "16",
     "Illinois": "17", "Indiana": "18", "Iowa": "19", "Kansas": "20", "Kentucky": "21", "Louisiana": "22",
     "Maine": "23", "Maryland": "24", "Massachusetts": "25", "Michigan": "26", "Minnesota": "27",
     "Mississippi": "28", "Missouri": "29", "Montana": "30", "Nebraska": "31", "Nevada": "32",

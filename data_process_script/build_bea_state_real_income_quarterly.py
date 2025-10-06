@@ -54,6 +54,6 @@ if __name__ == "__main__":
 
     df_all = pd.concat([df_2018_2024, df_2025], ignore_index=True)
 
-    df_all.to_csv("bea_state_percapita_income_2018_2025.csv", index=False)
-    print("✅ Saved bea_state_percapita_income_2018_2025.csv")
+    df_all.to_csv("state_percapita_income_2018_2025.csv", index=False)
+    print("✅ Saved state_percapita_income_2018_2025.csv")
     print(df_all.head())

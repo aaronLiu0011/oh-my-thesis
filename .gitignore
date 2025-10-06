@@ -36,3 +36,5 @@ __pycache__/
 **/tempCodeRunnerFile.py
 
 temp/
+
+data_process_script/API_KEY.txt
