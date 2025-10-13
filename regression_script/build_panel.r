@@ -192,6 +192,17 @@ panel <- y_panel |>
 
 panel <- panel |> select(-date.x, -date.y)
 
+base_year  <- 2018
+base_month <- 1
 
+panel[, time_id := (Year - base_year) * 12 + (Month - base_month)]
+
+panel[, treat_time := ifelse(
+  is.na(treat_year) | is.na(treat_month),
+  NA,
+  (as.numeric(treat_year) - base_year) * 12 + (as.numeric(treat_month) - base_month)
+)]
+
+write.csv(panel, "panel.csv")
 
 
