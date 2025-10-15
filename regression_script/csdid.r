@@ -1,5 +1,6 @@
 library(did)
 library(data.table)
+library("panelView")
 
 panel <- fread("/Users/okuran/Desktop/thesis/master_data/panel.csv")
 
@@ -11,15 +12,10 @@ panel[, fips_id := as.numeric(factor(fips))]
 att_monthly <- att_gt(
   yname   = "sy_index",
   tname   = "time_id",
-  idname  = "fips",
+  idname  = "fips_id",
   gname   = "treat_time",
-  xformla = ~ percapita_income + urate + temp + Cong_per_100000 +
-    age_15_44 + black_share + hispanic_share +
-    uninsured_pct + highschool + married +
-    unmarried_birth + physician_rate,
-  data    = panel,
-  est_method     = "dr",
-  control_group  = "nevertreated"
+  xformla = ~ 1,
+  data    = panel
 )
 
 summary(att_monthly)

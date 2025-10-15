@@ -199,7 +199,7 @@ panel[, time_id := (Year - base_year) * 12 + (Month - base_month)]
 
 panel[, treat_time := ifelse(
   is.na(treat_year) | is.na(treat_month),
-  NA,
+  0,
   (as.numeric(treat_year) - base_year) * 12 + (as.numeric(treat_month) - base_month)
 )]
 
