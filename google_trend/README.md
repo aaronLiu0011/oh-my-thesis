@@ -36,7 +36,7 @@ Verify whether Google Trends indices for `chlamydia`, `gonorrhea`, and `syphilis
 
 ### **Reference Notebooks**
 
-📄 [`google_trend/validation/validate_complete.ipynb`](validation/validate_complete.ipynb)
+📄 [`google_trend/validation/validate_cdc_gt.ipynb`](validation/validate_cdc_gt.ipynb)
 
 ## **2. Construction of Cross-State Comparable Metrics**
 
