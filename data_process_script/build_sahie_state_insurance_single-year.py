@@ -12,7 +12,7 @@ url = "https://api.census.gov/data/timeseries/healthins/sahie"
 params = {
     "get": "NAME,PCTIC_PT,PCTUI_PT",
     "for": "state:*",
-    "time": "2018",
+    "time": "2023",
     "AGECAT": "2",
     "IPRCAT": "0"
 }
@@ -31,7 +31,7 @@ df_out = df.rename(columns={
     "PCTUI_PT": "uninsured_pct"
 })[["state", "state_name", "insured_pct", "uninsured_pct"]]
 
-df_out.to_csv("state_sahie2018_insurance.csv", index=False)
+df_out.to_csv("state_insurance_2023.csv", index=False)
 
-print("✅ Saved state_sahie2018_insurance.csv")
+print("✅ Saved state_insurance_2023.csv")
 print(df_out.head())
