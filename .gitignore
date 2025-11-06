@@ -40,3 +40,5 @@ temp/
 data_process_script/API_KEY.txt
 
 .RDataTmp
+
+.latexmkrc
