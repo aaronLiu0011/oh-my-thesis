@@ -32,12 +32,18 @@ __pycache__/
 *.png
 *.docx
 *.pptx
+*.log
 
 **/tempCodeRunnerFile.py
+**/tempCodeRunnerFile.r
+
 
 temp/
 
+raw_data/
+
 data_process_script/API_KEY.txt
+
 
 .RDataTmp
 

@@ -82,7 +82,7 @@ treatment <- treatment |>
 #-------------
 ## Control Variables
 
-### Unemployment rate
+### congregation
 congregation <- fread(file.path(ctrlVar_dir, "state_congregation_2020.csv"))
 congregation <- congregation |>
   transmute(
