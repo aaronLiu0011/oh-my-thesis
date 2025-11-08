@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 
+# Direct Download from: https://apps.bea.gov/itable/?ReqID=70&step=1&_gl=1*1d4xpw*_ga*MjA0ODQ1OTU0Ni4xNzU5MDMzMTU5*_ga_J4698JNNFT*czE3NjI0MzczNTMkbzIkZzEkdDE3NjI0MzczNjckajQ2JGwwJGgw#eyJhcHBpZCI6NzAsInN0ZXBzIjpbMSwyOSwyNSwzMSwyNiwyNywzMF0sImRhdGEiOltbIlRhYmxlSWQiLCIzNiJdLFsiTWFqb3JfQXJlYSIsIjAiXSxbIlN0YXRlIixbIjAiXV0sWyJBcmVhIixbIlhYIl1dLFsiU3RhdGlzdGljIixbIjEiXV0sWyJVbml0X29mX21lYXN1cmUiLCJMZXZlbHMiXSxbIlllYXIiLFsiMjAyNSIsIjIwMjQiLCIyMDIzIiwiMjAyMiIsIjIwMjEiLCIyMDIwIiwiMjAxOSIsIjIwMTgiLCIyMDE3IiwiMjAxNiIsIjIwMTUiLCIyMDE0IiwiMjAxMyIsIjIwMTIiLCIyMDExIiwiMjAxMCJdXSxbIlllYXJCZWdpbiIsIi0xIl0sWyJZZWFyX0VuZCIsIi0xIl1dfQ==
 # https://apps.bea.gov/api/_pdf/bea_web_service_api_user_guide.pdf
 
 API_KEY = "YOUR_API_KEY"  # Required, get your own free key at https://www.bea.gov/resources/for-developers
@@ -46,14 +47,14 @@ def fetch_bea(years, linecode=3, geo="STATE", freq="Q"):
 
 
 if __name__ == "__main__":
-    df_2018_2024 = fetch_bea(list(range(2018, 2025)))
+    df_2010_2024 = fetch_bea(list(range(2010, 2025)))
 
     df_2025 = fetch_bea([2025])
     if not df_2025.empty:
         df_2025 = df_2025[df_2025["quarter"].isin(["2025Q1", "2025Q2"])]
 
-    df_all = pd.concat([df_2018_2024, df_2025], ignore_index=True)
+    df_all = pd.concat([df_2010_2024, df_2025], ignore_index=True)
 
-    df_all.to_csv("state_percapita_income_2018_2025.csv", index=False)
-    print("✅ Saved state_percapita_income_2018_2025.csv")
+    df_all.to_csv("state_percapita_income_2010_2025.csv", index=False)
+    print("✅ Saved state_percapita_income_2010_2025.csv")
     print(df_all.head())

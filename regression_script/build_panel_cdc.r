@@ -128,7 +128,7 @@ urate <- urate |>
   mutate(fips = norm_fips(state_fips),
          year = as.numeric(year)) |>
   group_by(fips, year) |>
-  summarise(urate = mean(urate , na.rm = TRUE)) |>
+  summarise(unrate = mean(urate , na.rm = TRUE)) |>
   ungroup()
 
 ### poverty rate
@@ -137,7 +137,7 @@ poverty <- poverty |>
   transmute(
     fips = norm_fips(state),
     year = as.numeric(year),
-    prate = as.numeric(poverty_rate)
+    poverty_rate = as.numeric(poverty_rate)
   )
 
 ### titleX user
@@ -175,8 +175,21 @@ panel <- y_panel |>
   left_join(uninsured, by = c("fips", "year")) |>
   left_join(urate, by = c("fips", "year")) |>
   filter(cohort == 2022 | is.na(cohort)) |>
-  filter(year != 2020)
+  filter(year != 2020) |>
+  mutate(
+    event_time = year - 2022,
+    post = ifelse(year >= cohort & !is.na(cohort), 1, 0),
+    treated = ifelse(is.na(cohort), 0, 1),
+    did = treated * post
+  )
 
+panel <- panel |>
+  mutate(
+    sy_z = scale(sy_index)[,1],
+    go_z = scale(go_index)[,1],
+    ch_z = scale(ch_index)[,1],
+    std_index = rowMeans(cbind(sy_z, go_z, ch_z), na.rm = TRUE)
+  )
 
 pdata <- pdata.frame(panel, index = c("fips", "year"))
 pdim(pdata) 

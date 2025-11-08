@@ -2,13 +2,13 @@ library(data.table)
 library(lubridate)
 library(zoo)
 
-dt <- fread("/Users/okuran/Desktop/thesis/master_data/ctrl_var_state/percapita_income_raw.csv")
+income <- fread("/Users/okuran/Desktop/thesis/raw_data/percapita_income_raw.csv")
 
-dt[, fips := sprintf("%02d", as.integer(GeoFips) / 1000)]
+income[, fips := sprintf("%02d", as.integer(GeoFips) / 1000)]
 
 q_cols <- grep("^\\d{4}:Q[1-4]$", names(income), value = TRUE)
 
-income_long <- data.table::melt(
+income_long <- melt(
   dt,
   id.vars = c("fips", "GeoName"),
   measure.vars = q_cols,
