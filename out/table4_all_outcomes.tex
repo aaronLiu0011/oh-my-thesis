@@ -1,0 +1,48 @@
+\begin{table}
+\centering
+\begin{talltblr}[         %% tabularray outer open
+caption={Effect of Abortion Bans on Health/Social Indices: Full Specification},
+note{}={* p \num{< 0.1}, ** p \num{< 0.05}, *** p \num{< 0.01}},
+note{ }={Standard errors clustered at the state level in parentheses.},
+note{  }={$^{***}$p$<$0.01, $^{**}$p$<$0.05, $^{*}$p$<$0.1.},
+note{   }={All models include full controls, state and year fixed effects.},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]},
+hline{2}={1-4}{solid, black, 0.05em},
+hline{26}={1-4}{solid, black, 0.05em},
+hline{1}={1-4}{solid, black, 0.1em},
+hline{29}={1-4}{solid, black, 0.1em},
+column{2-4}={}{halign=c},
+column{1}={}{halign=l},
+}                     %% tabularray inner close
+& SY Index & CH Index & GO Index \\
+Abortion Ban $\times$ Post & \num{8.833} & \num{44.553}*** & \num{-1.825} \\
+& (\num{6.815}) & (\num{12.633}) & (\num{17.730}) \\
+Title X Usage Rate & \num{0.129} & \num{2.111}** & \num{0.935} \\
+& (\num{0.108}) & (\num{0.817}) & (\num{0.725}) \\
+Uninsured Rate & \num{-0.104} & \num{0.165} & \num{-0.124} \\
+& (\num{0.271}) & (\num{2.145}) & (\num{1.732}) \\
+Unemployment Rate & \num{0.238} & \num{-4.250} & \num{1.886} \\
+& (\num{0.479}) & (\num{4.409}) & (\num{3.380}) \\
+Poverty Rate & \num{-0.821} & \num{-6.676} & \num{-4.712} \\
+& (\num{0.696}) & (\num{4.614}) & (\num{3.469}) \\
+Per Capita Income (\$1,000s) & \num{0.000} & \num{0.002} & \num{0.002} \\
+& (\num{0.001}) & (\num{0.001}) & (\num{0.002}) \\
+Share Female 15-44 & \num{14.727} & \num{-696.844} & \num{346.453} \\
+& (\num{102.885}) & (\num{848.770}) & (\num{585.206}) \\
+Share Male & \num{-139.649} & \num{-509.050} & \num{-1143.663} \\
+& (\num{287.361}) & (\num{1182.915}) & (\num{1625.206}) \\
+Share Black & \num{-43.103} & \num{-1096.570} & \num{-2555.340}** \\
+& (\num{122.424}) & (\num{734.843}) & (\num{993.048}) \\
+Share Married (15+) & \num{-16.412} & \num{343.996} & \num{486.507} \\
+& (\num{51.353}) & (\num{316.559}) & (\num{332.032}) \\
+Share Highschool Educated (25+) & \num{-5.427} & \num{-612.024} & \num{-231.250} \\
+& (\num{79.274}) & (\num{753.760}) & (\num{474.286}) \\
+Share College Educated (25+) & \num{-205.186}*** & \num{-667.311} & \num{-1099.976}** \\
+& (\num{72.326}) & (\num{517.316}) & (\num{413.802}) \\
+Observations & \num{584} & \num{584} & \num{584} \\
+$R^2$ & \num{0.736} & \num{0.957} & \num{0.928} \\
+Adjusted $R^2$ & \num{0.701} & \num{0.951} & \num{0.919} \\
+\end{talltblr}
+\end{table}

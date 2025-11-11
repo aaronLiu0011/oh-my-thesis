@@ -1,0 +1,134 @@
+% !TEX root = main.tex
+\input{./preamble.tex}
+
+% ========== Meta Information ==========
+\title{The Impact of Abortion Accessibility on Sexually Transmitted Infections:
+Evidence from the U.S. Dobbs Decision}
+\author{Aaron Liu}
+\date{Master's Thesis \\ Graduate School of Economics \\ The University of Tokyo \\ November 2025}
+
+% ========== Section formatting ==========
+\titleformat{\chapter}{\Large\bfseries}{\thechapter.}{1em}{}
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+
+% ========== Document ==========
+\begin{document}
+
+\graphicspath{{figures/}}
+\maketitle
+\tableofcontents
+\listoftables
+\listoffigures
+
+% ==========================================================
+\chapter{Introduction}
+\section{Background and Motivation}
+Recent developments in abortion law reforms, particularly following the \textit{Dobbs v. Jackson Women’s Health Organization} decision, have significantly altered reproductive healthcare accessibility across U.S. states. 
+This thesis investigates whether and how these policy changes have affected the transmission of sexually transmitted infections (STIs). 
+
+\section{Research Question and Contribution}
+The central question is whether restrictive abortion policies increase STI incidence by reducing access to sexual health services or altering risk behaviors. 
+This study contributes by combining a causal identification strategy (Difference-in-Differences) with modern machine learning techniques (Double Machine Learning), complemented by heterogeneity and behavioral analyses.
+
+\section{Overview of Methodology}
+This study integrates four empirical approaches: 
+(1) a state-level two-way fixed-effects DID model as the main identification, 
+(2) a DML framework for robustness under flexible controls, 
+(3) heterogeneity and synthetic control analyses to explore cross-state differences, 
+and (4) Google Trends analysis as behavioral evidence.
+
+% ==========================================================
+\chapter{Institutional Background and Literature Review}
+\section{Abortion Law Reforms in the United States}
+Provide a timeline of major reforms (e.g., trigger laws, gestational limits, enforcement mechanisms).
+
+\section{Public Health and Reproductive Policy Linkages}
+Summarize literature linking reproductive rights, healthcare access, and sexual behavior.
+
+\section{Related Empirical Studies}
+Discuss key works using DID, synthetic control, or DML in policy evaluation.
+
+\section{Positioning of This Study}
+Clarify how your work differs: cross-state STI focus, modern methods, behavioral mechanism.
+
+% ==========================================================
+\chapter{Data and Empirical Strategy}
+\section{Data Sources}
+\begin{itemize}
+    \item \textbf{STI Data:} CDC AtlasPlus – Syphilis, Gonorrhea, and Chlamydia rates (2010–2023)
+    \item \textbf{Socioeconomic Controls:} Census ACS, SAIPE, BLS, BEA datasets
+    \item \textbf{Policy Variables:} Abortion law timelines, cohort identifiers
+    \item \textbf{Behavioral Data:} Google Trends indices on sexual health keywords
+\end{itemize}
+
+\section{Baseline Identification: Difference-in-Differences}
+\begin{equation}
+Y_{st} = \alpha + \beta (Post_t \times Treated_s) + X_{st}'\gamma + \mu_s + \lambda_t + \varepsilon_{st}
+\end{equation}
+where $Y_{st}$ denotes STI incidence in state $s$ and year $t$, and $\beta$ represents the average treatment effect on the treated (ATT).
+
+\section{Double Machine Learning Framework}
+\begin{equation}
+Y = \theta D + g(X) + \varepsilon, \quad D = m(X) + \nu
+\end{equation}
+The estimator $\hat{\theta}$ captures the average treatment effect (ATE), controlling flexibly for high-dimensional confounders via Random Forest learners.
+
+\section{Heterogeneity Analysis}
+Subgroup and interaction analysis across socioeconomic environments (poverty, education, insurance).
+
+\section{Synthetic Control Design}
+Construct state-specific counterfactuals (e.g., Texas, Louisiana) to visualize dynamic policy effects.
+
+% ==========================================================
+\chapter{Empirical Results}
+\section{Baseline DID Results}
+Present main regression tables for Syphilis, Gonorrhea, Chlamydia, and composite indices.
+
+\section{Robustness: Double Machine Learning Estimates}
+Report ATEs estimated via DML-PLR; compare direction and magnitude to DID results.
+
+\section{Heterogeneity Across Socioeconomic Environments}
+Show results for high/low poverty, education, and insurance groups.
+
+\section{Synthetic Control Case Studies}
+Include gap plots and placebo tests for representative states.
+
+% ==========================================================
+\chapter{Mechanism Evidence: Behavioral Responses}
+\section{Google Trends Analysis}
+Describe keyword selection (e.g., ``condom use'', ``STD testing'', ``birth control clinic'') and construction of state-level indices.
+
+\section{Empirical Strategy}
+Use event-study or DID-style comparison around reform years to test behavioral responses.
+
+\section{Findings and Interpretation}
+Discuss how reductions in preventive-search behavior correspond to increases in STI rates.
+
+% ==========================================================
+\chapter{Conclusion and Discussion}
+\section{Summary of Findings}
+Recap the main empirical findings and their implications.
+
+\section{Policy Implications}
+Highlight implications for public health and reproductive policy coordination.
+
+\section{Limitations and Future Research}
+Discuss data constraints, unobserved spillovers, and potential extensions (e.g., county-level analysis, Title X clinic mechanisms).
+
+% ==========================================================
+\begin{appendices}
+\chapter{Appendix: Data Construction Details}
+Include variable definitions, FIPS mappings, and API sources.
+
+\chapter{Appendix: Additional Tables and Figures}
+Event-study coefficients, placebo results, robustness checks.
+
+\chapter{Appendix: Code Summary}
+List major R scripts for DID, DML, heterogeneity, SCM, and Google Trends.
+\end{appendices}
+
+% ==========================================================
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\end{document}

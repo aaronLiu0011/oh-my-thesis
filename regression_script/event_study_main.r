@@ -14,8 +14,9 @@ run_event_study <- function(dep_var, title_text) {
     paste0(
       dep_var, 
       " ~ i(event_time, treated, ref = -1) + ",
-      "share_age_15_44 + share_male + share_black + log(income) + unrate + poverty_rate + ",
-      "share_married_15p + share_hs_plus_25p + share_ba_plus_25p + titlex_rate | fips + year"
+      "share_age_15_44 + share_male + share_black + ",
+      "share_married_15p + share_hs_plus_25p + unrate + poverty_rate + uninsured_pct + ",
+      "log(income) | fips + year"
     )
   )
   
