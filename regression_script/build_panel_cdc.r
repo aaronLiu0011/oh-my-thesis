@@ -174,7 +174,7 @@ panel <- y_panel |>
   left_join(titleX, by = c("fips", "year")) |>
   left_join(uninsured, by = c("fips", "year")) |>
   left_join(urate, by = c("fips", "year")) |>
-  filter(cohort == 2022 | is.na(cohort)) |>
+  filter(cohort == 2022 | is.na(cohort)) |>. # filtrate the late-adopted states
   filter(year != 2020) |>
   mutate(
     event_time = year - 2022,

@@ -1,32 +1,26 @@
 # ================================
-# Difference-in-Differences (DML version)
+# Double Machine Learning (DML) Analysis & Visualization
 # ================================
 library(tidyverse)
 library(DoubleML)
 library(mlr3learners)
 library(modelsummary)
-library(broom)
-library(glue)
 library(data.table)
-
+library(ggplot2)
+library(glue)
 
 # =========== config ==========
-DATA_PATH <- "/Users/okuran/Desktop/thesis/master_data/state_panel_2010_2023.csv"
-OUT_DIR   <- "/Users/okuran/Desktop/thesis/out"
 
+set.seed(42)
+
+DATA_PATH <- "/Users/okuran/Desktop/thesis/master_data/state_panel_2010_2023.csv"
+OUT_DIR   <- "/Users/okuran/Desktop/thesis/out/out_dml"
 if (!dir.exists(OUT_DIR)) dir.create(OUT_DIR, recursive = TRUE)
 
-ms_stars <- c("*" = .10, "**" = .05, "***" = .01)
-gof_omit <- "df|t|p|conf|method"
 
-# =========== data load ==========
-panel_data <- read_csv(DATA_PATH, show_col_types = FALSE)
-
-# 创建 DML 用的基本变量
-panel_data <- panel_data |>
-  mutate(
-    D = if_else(did == 1, 1, 0)   # treatment indicator
-  )
+# =========== read data ==========
+panel_data <- read_csv(DATA_PATH, show_col_types = FALSE) |>
+  mutate(D = if_else(did == 1, 1, 0))   # treatment indicator
 
 # =========== helper function ==========
 fit_dml_spec <- function(dep_var, pretty_name){
@@ -39,7 +33,6 @@ fit_dml_spec <- function(dep_var, pretty_name){
     "unrate", "poverty_rate", "uninsured_pct", "income"
   )
   
-  # 构造 DoubleML 数据对象
   data_ml <- panel_data |>
     select(all_of(c(y, d, x))) |>
     drop_na() |>
@@ -47,42 +40,79 @@ fit_dml_spec <- function(dep_var, pretty_name){
   
   dml_data <- DoubleMLData$new(data_ml, y_col = y, d_cols = d)
   
-  # 随机森林作为 ML learner
   ml_l <- lrn("regr.ranger", num.trees = 2000)
   ml_m <- lrn("classif.ranger", num.trees = 2000, predict_type = "prob")
   
-  # 估计 PLR 模型（适合连续因变量的DID主效应）
   dml_plr <- DoubleMLPLR$new(dml_data, ml_l, ml_m)
   dml_plr$fit()
   
-  # 提取结果
   res <- tibble(
     outcome   = pretty_name,
-    estimate  = dml_plr$coef,
-    std.error = dml_plr$se,
-    conf.low  = dml_plr$coef - 1.96 * dml_plr$se,
-    conf.high = dml_plr$coef + 1.96 * dml_plr$se,
-    p.value   = 2 * (1 - pnorm(abs(dml_plr$t_stat)))
+    learner   = "Random Forest (ranger)",
+    n         = nrow(data_ml),
+    estimate  = round(dml_plr$coef, 2),
+    std.error = round(dml_plr$se, 2),
+    conf.low  = round(dml_plr$coef - 1.96 * dml_plr$se, 2),
+    conf.high = round(dml_plr$coef + 1.96 * dml_plr$se, 2),
+    p.value   = round(2 * (1 - pnorm(abs(dml_plr$t_stat))), 3)
   )
   
-  # 输出到 HTML
   html_file <- file.path(OUT_DIR, glue("dml_did_{tolower(pretty_name)}.html"))
-  
   datasummary_df(
     data = res,
     title = glue("DoubleML DID Estimate — {pretty_name}"),
     output = html_file
   )
-  
   message(glue("✔ Exported: {html_file}"))
   return(res)
 }
 
-# =========== run ==========
+# =========== run models ==========
 res_sy <- fit_dml_spec("sy_index",  "Syphilis")
 res_go <- fit_dml_spec("go_index",  "Gonorrhea")
 res_ch <- fit_dml_spec("ch_index",  "Chlamydia")
 res_st <- fit_dml_spec("std_index", "STDs_Composite")
 
+# combine all results
 att_table <- bind_rows(res_sy, res_go, res_ch, res_st)
-print(att_table)
+
+# =========== summary HTML ==========
+summary_file <- file.path(OUT_DIR, "dml_summary.html")
+datasummary_df(
+  data = att_table,
+  title = "Summary of DML DID Estimates (Random Forest Learners)",
+  output = summary_file
+)
+message(glue("✔ Exported summary table: {summary_file}"))
+
+# =========== coefficient plot ==========
+coef_plot <- ggplot(att_table, aes(x = outcome, y = estimate)) +
+  geom_point(size = 3, color = "black") +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.15) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
+  labs(
+    title = "DML Estimates with 95% Confidence Intervals",
+    subtitle = "Estimated ATT (Post × Treated)",
+    x = "Outcome", y = "Estimated Effect"
+  ) +
+  theme_minimal(base_size = 14)
+
+ggsave(file.path(OUT_DIR, "dml_coef_plot.png"), coef_plot, width = 6, height = 4, dpi = 300)
+message(glue("✔ Saved: dml_coef_plot.png"))
+
+# =========== optional: CATE visualization ==========
+# Uncomment if you run DoubleMLIRM or causal forest later
+# dml_irm <- DoubleMLIRM$new(dml_data, ml_l, ml_m)
+# dml_irm$fit()
+# cate <- dml_irm$compute_cate()
+# cate_df <- data.frame(cate = cate)
+# 
+# cate_plot <- ggplot(cate_df, aes(x = cate)) +
+#   geom_histogram(bins = 30, fill = "steelblue", alpha = 0.6) +
+#   geom_vline(xintercept = mean(cate), linetype = "dashed") +
+#   labs(title = "Distribution of Estimated CATE (DoubleMLIRM)",
+#        x = "CATE", y = "Frequency") +
+#   theme_minimal(base_size = 14)
+# 
+# ggsave(file.path(OUT_DIR, "dml_cate_hist.png"), cate_plot, width = 6, height = 4, dpi = 300)
+# message(glue("✔ Saved: dml_cate_hist.png"))
