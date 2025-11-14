@@ -1,134 +1,353 @@
-% !TEX root = main.tex
-\input{./preamble.tex}
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
 
-% ========== Meta Information ==========
-\title{The Impact of Abortion Accessibility on Sexually Transmitted Infections:
-Evidence from the U.S. Dobbs Decision}
-\author{Aaron Liu}
-\date{Master's Thesis \\ Graduate School of Economics \\ The University of Tokyo \\ November 2025}
 
-% ========== Section formatting ==========
-\titleformat{\chapter}{\Large\bfseries}{\thechapter.}{1em}{}
-\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+% =========================================================
 
-% ========== Document ==========
 \begin{document}
 
-\graphicspath{{figures/}}
-\maketitle
+\newpage
 \tableofcontents
-\listoftables
+\newpage
+
 \listoffigures
+\newpage
 
-% ==========================================================
-\chapter{Introduction}
-\section{Background and Motivation}
-Recent developments in abortion law reforms, particularly following the \textit{Dobbs v. Jackson Women’s Health Organization} decision, have significantly altered reproductive healthcare accessibility across U.S. states. 
-This thesis investigates whether and how these policy changes have affected the transmission of sexually transmitted infections (STIs). 
+\listoftables
+\newpage
 
-\section{Research Question and Contribution}
-The central question is whether restrictive abortion policies increase STI incidence by reducing access to sexual health services or altering risk behaviors. 
-This study contributes by combining a causal identification strategy (Difference-in-Differences) with modern machine learning techniques (Double Machine Learning), complemented by heterogeneity and behavioral analyses.
+\pagenumbering{arabic}
 
-\section{Overview of Methodology}
-This study integrates four empirical approaches: 
-(1) a state-level two-way fixed-effects DID model as the main identification, 
-(2) a DML framework for robustness under flexible controls, 
-(3) heterogeneity and synthetic control analyses to explore cross-state differences, 
-and (4) Google Trends analysis as behavioral evidence.
 
-% ==========================================================
-\chapter{Institutional Background and Literature Review}
-\section{Abortion Law Reforms in the United States}
-Provide a timeline of major reforms (e.g., trigger laws, gestational limits, enforcement mechanisms).
+\section{Introduction}
 
-\section{Public Health and Reproductive Policy Linkages}
-Summarize literature linking reproductive rights, healthcare access, and sexual behavior.
+\subsection{Research Question}
 
-\section{Related Empirical Studies}
-Discuss key works using DID, synthetic control, or DML in policy evaluation.
+This study examines whether the abortion restrictions enacted in the aftermath of the
+\textit{Dobbs v.~Jackson Women’s Health Organization} ruling produced measurable effects on
+sexually transmitted infection (STI) outcomes in the United States. The \textit{Dobbs} decision
+fundamentally altered the institutional environment surrounding reproductive health by removing
+federal constitutional protection for abortion and returning regulatory authority to individual
+states. Several states responded by enforcing restrictive laws almost immediately, while others
+maintained the status quo. This abrupt divergence provides a policy intervention that is plausibly
+exogenous with respect to underlying STI trends.
 
-\section{Positioning of This Study}
-Clarify how your work differs: cross-state STI focus, modern methods, behavioral mechanism.
+The central question is whether these restrictive abortion policies contributed to changes in the
+incidence of major reportable STIs—including syphilis, gonorrhea, and chlamydia—during the two
+years following the ruling. STIs have exhibited sustained growth in the United States over the
+past decade, and recent policy debates have highlighted the importance of reproductive-health
+infrastructure and sexual health services in shaping disease transmission. Despite these broader
+concerns, empirical evidence linking abortion policy to STI trends remains limited, and the
+potential spillovers of reproductive policy into other dimensions of public health are still not
+well understood.
 
-% ==========================================================
-\chapter{Data and Empirical Strategy}
-\section{Data Sources}
-\begin{itemize}
-    \item \textbf{STI Data111:} CDC AtlasPlus – Syphilis, Gonorrhea, and Chlamydia rates (2010–2023)
-    \item \textbf{Socioeconomic Controls:} Census ACS, SAIPE, BLS, BEA datasets
-    \item \textbf{Policy Variables:} Abortion law timelines, cohort identifiers
-    \item \textbf{Behavioral Data:} Google Trends indices on sexual health keywords
-\end{itemize}
+This study seeks to provide a systematic assessment of whether the policy shift in 2022 induced
+observable departures from the counterfactual STI trajectories that states would have followed in
+the absence of the ruling. The analysis is grounded in state-year panel data spanning more than a
+decade before and after the decision, allowing for the estimation of both average treatment
+effects and dynamic changes over time. By bringing together policy variation, detailed public
+health data, and modern causal inference methods, the study aims to clarify whether the post-
+\textit{Dobbs} abortion restrictions have had unintended consequences for sexual health outcomes.
 
-\section{Baseline Identification: Difference-in-Differences}
+
+\subsection{Motivation}
+
+Reproductive-health policies often influence a wide range of behavioural and institutional
+responses beyond fertility outcomes. Following the \textit{Dobbs} decision, substantial public
+debate has focused on access to reproductive care, the reconfiguration of healthcare systems, and
+potential spillovers to related health behaviours. At the same time, STI rates in the United
+States have exhibited persistent growth in the past decade, with notable heterogeneity across
+states. Despite these developments, empirical evidence on the causal link between post-\textit{Dobbs}
+abortion restrictions and STI outcomes remains limited. The motivation of this study is to fill
+this gap by providing credible causal estimates based on long-term state-level panel data.
+
+\subsection{Contribution}
+
+This study contributes to the literature in several ways. First, it provides new causal evidence on 
+how abortion restrictions influence sexual-health outcomes, an area that has received limited 
+empirical attention. While existing work has examined the effects of reproductive-health policy on 
+fertility, abortion incidence, and related services, the potential spillovers onto STI outcomes have 
+not been systematically analysed. Second, the study constructs a state-year panel from 2010 to 2023 
+that combines surveillance data, demographic indicators, and socioeconomic controls. This dataset 
+supports both cross-state comparisons and dynamic analysis over an extended period. Third, the 
+empirical design integrates Difference-in-Differences estimation, event-study specifications, and 
+synthetic control methods. This combination provides a transparent framework for assessing the 
+robustness of the findings and evaluating the credibility of identification. By triangulating 
+evidence across complementary approaches, the analysis aims to produce a coherent assessment of the 
+policy’s impact.
+
+\subsection{Summary of Findings}
+
+The results indicate that states implementing abortion restrictions after the \textit{Dobbs} ruling 
+experienced increases in STI indices relative to states that maintained access. Event-study 
+estimates reveal stable pre-treatment patterns and a clear divergence beginning in 2022, consistent 
+with the timing of the policy change. Synthetic control analyses for selected states display similar 
+post-treatment separations from their synthetic counterparts, and placebo exercises do not show 
+comparable effects in periods without policy changes or among states that did not adopt 
+restrictions. The convergence of these findings across multiple identification strategies suggests 
+that the observed increase in STI outcomes reflects the causal impact of abortion restrictions 
+rather than artefacts of model specification or idiosyncratic data patterns.
+
+
+\subsection{Roadmap}
+
+The remainder of the thesis proceeds as follows.
+Section~\ref{sec:institution} describes the institutional and policy background relevant to the
+\textit{Dobbs} ruling and the variation in state-level abortion restrictions.
+Section~\ref{sec:data} presents the data sources, variable construction, and descriptive
+statistics.
+Section~\ref{sec:strategy} outlines the empirical strategy, including the baseline Difference-in-
+Differences model, event-study framework, and robustness checks.
+Section~\ref{sec:results} reports the main results.
+Section~\ref{sec:discussion} discusses the broader interpretation of the findings and situates
+them within the existing literature.
+Section~\ref{sec:conclusion} concludes.
+
+% =========================================================
+
+\section{Institutional Background}\label{sec:institution}
+11111
+\subsection{Abortion Policy After \textit{Dobbs}}
+\subsection{Trigger Laws and State-Level Variation}
+\subsection{STI Trends and Public Health Framework}
+
+% =========================================================
+\section{Data}\label{sec:data}
+
+\subsection{Data Sources}
+
+1111
+\subsection{Outcome Variables}
+\subsection{Treatment Variable}
+\subsection{Socioeconomic and Demographic Controls}
+\subsection{Sample Construction and Cleaning}
+\subsection{Descriptive Statistics}
+
+% =========================================================
+
+\section{Empirical Strategy}\label{sec:strategy}
+
+This section outlines the empirical approach used to estimate the impact of post-\textit{Dobbs}
+abortion restrictions on sexually transmitted infection outcomes. The design takes advantage of
+a sharp institutional shift produced by the 2022 Supreme Court decision, which removed federal
+constitutional protection for abortion and led to immediate policy changes in a subset of states.
+The staggered response across states creates a treated–control structure in which some states
+implemented restrictive laws while others maintained existing access. This variation, combined
+with a long state-year panel from 2010 to 2023, provides a suitable environment for identifying
+causal effects using Difference-in-Differences methods, dynamic event-study estimators, and
+synthetic control analysis. These approaches enable the estimation of both average and evolving
+policy effects while offering multiple avenues for assessing identification and robustness.
+
+\subsection{Baseline Difference-in-Differences Model}
+
+The analysis begins with a two-way fixed-effects Difference-in-Differences specification. Let
+$Y_{st}$ denote the STI outcome of interest for state $s$ in year $t$. The treatment indicator
+$\text{Policy}_{st}$ equals one if a state enforces a restrictive abortion statute in that year
+and zero otherwise. The baseline model is given by
+
 \begin{equation}
-Y_{st} = \alpha + \beta (Post_t \times Treated_s) + X_{st}'\gamma + \mu_s + \lambda_t + \varepsilon_{st}
+    Y_{st} = \beta\,\text{Policy}_{st} + X_{st}'\Gamma + \alpha_s + \lambda_t + \varepsilon_{st}.
 \end{equation}
-where $Y_{st}$ denotes STI incidence in state $s$ and year $t$, and $\beta$ represents the average treatment effect on the treated (ATT).
 
-\section{Double Machine Learning Framework}
+The vector $X_{st}$ consists of time-varying covariates that capture demographic and
+socioeconomic conditions that may influence STI dynamics and correlate with policy adoption.
+State fixed effects $\alpha_s$ remove persistent differences across states, such as long-standing
+cultural, institutional, or healthcare infrastructure characteristics. Year fixed effects
+$\lambda_t$ absorb national developments that influence all states simultaneously, including
+changes in reporting practices or nationwide health shocks. Standard errors are clustered at the
+state level to account for serial correlation.
+
+Under the identifying assumptions discussed in the next subsection, the coefficient $\beta$
+captures the average treatment effect of abortion restrictions on STI outcomes. This estimate
+reflects how the treated states’ trajectories diverged from their counterfactual paths represented
+by control states. The specification serves as the foundation for subsequent analyses and provides
+a benchmark against which more flexible approaches can be compared.
+
+\subsection{Identification Assumptions}
+
+The interpretation of the Difference-in-Differences coefficient as a causal effect depends on the
+plausibility of several assumptions. A first requirement is that treated and untreated states would
+have followed parallel trends in STI outcomes in the absence of policy changes. While the
+counterfactual cannot be observed, the event-study results presented below allow an empirical
+assessment by examining pre-treatment dynamics. Before the policy shift, STI trends across states
+were relatively stable, and there is no indication of systematic divergence between states that
+would later adopt restrictive laws and those that would not.
+
+A second requirement concerns the absence of anticipatory behaviour. Individuals and institutions
+should not alter their behaviour before the formal implementation of abortion restrictions. The
+leak of the draft \textit{Dobbs} opinion raises the possibility of early adjustments, particularly
+in the months immediately preceding the official ruling. In the empirical analysis, the estimates
+for periods just before the policy change allow for an assessment of whether such anticipatory
+behaviour is likely to affect the estimates.
+
+A third assumption involves the absence of spillovers across states. Policy changes in one state
+should not affect outcomes in another. In practice, some level of spillover may occur due to
+cross-state mobility for reproductive care or differences in STI reporting practices. Such
+spillovers, if present, are likely to attenuate differences by reducing the contrast between
+treated and control states, implying that the estimated effect can be interpreted as a lower bound
+of the true policy impact.
+
+Together, these assumptions provide the conceptual basis for the identification strategy. Their
+empirical plausibility is strengthened by the event-study results, which show stable pre-treatment
+patterns and a clear separation emerging only after the policy shock.
+
+\subsection{Event Study Specification}\label{sec:eventstudy}
+
+To assess pre-treatment dynamics and document the evolution of treatment effects over time, the
+DID model is expanded into an event-study specification. The model replaces the single treatment
+indicator with a set of relative-time indicators that capture periods before and after the policy
+change:
+
 \begin{equation}
-Y = \theta D + g(X) + \varepsilon, \quad D = m(X) + \nu
+    Y_{st} = \alpha_s + \lambda_t +
+    \sum_{k=-M}^{K} \beta_k D_{st}^{(k)} + X_{st}'\Gamma + \varepsilon_{st},
 \end{equation}
-The estimator $\hat{\theta}$ captures the average treatment effect (ATE), controlling flexibly for high-dimensional confounders via Random Forest learners.
 
-\section{Heterogeneity Analysis}
-Subgroup and interaction analysis across socioeconomic environments (poverty, education, insurance).
+where $D_{st}^{(k)}$ equals one if year $t$ is $k$ years relative to the implementation year,
+with $k=0$ corresponding to 2022. The omitted category is $k=-1$, allowing the remaining
+coefficients to be interpreted relative to the year immediately preceding the policy shift.
 
-\section{Synthetic Control Design}
-Construct state-specific counterfactuals (e.g., Texas, Louisiana) to visualize dynamic policy effects.
+The event-study serves two purposes. First, the coefficients associated with pre-treatment periods
+provide evidence on the validity of the parallel-trends and no-anticipation assumptions. A lack of
+significant movement in these coefficients strengthens the credibility of the causal
+interpretation. Second, the post-treatment coefficients trace the dynamic path of the policy’s
+effects, distinguishing immediate responses from more gradual adjustments. The timing of the
+\textit{Dobbs} ruling, concentrated in a single year with a substantial never-treated group,
+circumvents common concerns regarding staggered adoption and heterogeneous treatment timing,
+making the event-study estimator well suited for this setting.
 
-% ==========================================================
-\chapter{Empirical Results}
-\section{Baseline DID Results}
-Present main regression tables for Syphilis, Gonorrhea, Chlamydia, and composite indices.
+\subsection{Synthetic Control Design}
 
-\section{Robustness: Double Machine Learning Estimates}
-Report ATEs estimated via DML-PLR; compare direction and magnitude to DID results.
+To complement the DID and event-study results, synthetic control methods are employed for selected
+treated states. For each treated state examined, a synthetic counterpart is constructed as a
+convex combination of untreated states chosen to closely reproduce the treated state’s
+pre-treatment STI trajectory. The weights are selected to minimize discrepancies in outcomes and
+predictor variables during the pre-2022 period.
 
-\section{Heterogeneity Across Socioeconomic Environments}
-Show results for high/low poverty, education, and insurance groups.
+A credible synthetic control requires a strong pre-treatment fit. The root mean squared prediction
+error (RMSPE) is used to assess fit quality, with a lower RMSPE indicating a more reliable
+counterfactual. Following the construction of the synthetic unit, the analysis compares the paths
+of the treated state and its synthetic counterpart after 2022. A widening post-treatment gap is
+interpreted as the effect of the policy. To evaluate statistical significance, placebo procedures
+are implemented by repeating the synthetic control construction for each state in the donor pool.
+The distribution of these placebo gaps provides a benchmark for assessing the magnitude of the
+observed effects.
 
-\section{Synthetic Control Case Studies}
-Include gap plots and placebo tests for representative states.
+\subsection{Robustness Checks}
 
-% ==========================================================
-\chapter{Mechanism Evidence: Behavioral Responses}
-\section{Google Trends Analysis}
-Describe keyword selection (e.g., ``condom use'', ``STD testing'', ``birth control clinic'') and construction of state-level indices.
+Several robustness checks assess whether the findings depend on particular modelling choices or
+data features. A first exercise assigns the treatment to a pre-\textit{Dobbs} period in which no
+policy change occurred. If the empirical strategy were sensitive to unrelated fluctuations, this
+placebo treatment would generate effects similar to the baseline estimates. A lack of significant
+placebo effects therefore reinforces the credibility of the main results.
 
-\section{Empirical Strategy}
-Use event-study or DID-style comparison around reform years to test behavioral responses.
+A second robustness exercise arises within the synthetic control framework. By applying the same
+construction to each state in the donor pool, the analysis generates a distribution of placebo
+paths for untreated states. Comparing the magnitude of the actual post-treatment gap to this
+distribution provides a non-parametric test of the policy’s impact.
 
-\section{Findings and Interpretation}
-Discuss how reductions in preventive-search behavior correspond to increases in STI rates.
+A third robustness exercise addresses the exceptional nature of the COVID-19 period. The years
+2020 and 2021 were marked by disruptions in healthcare utilisation, reporting, and behavioural
+patterns relevant to STI transmission. Including these years as part of the pre-treatment period
+could distort the counterfactual trend. The main specification therefore omits these years from
+the estimation sample, and additional analyses confirm that the key findings are not driven by the
+treatment of the pandemic period.
 
-% ==========================================================
-\chapter{Conclusion and Discussion}
-\section{Summary of Findings}
-Recap the main empirical findings and their implications.
+Across all robustness exercises, the estimated effects remain consistent in sign and magnitude,
+providing further support for the interpretation that the post-\textit{Dobbs} increase in STI
+outcomes reflects the causal impact of abortion restrictions rather than artefacts of model
+specification or data irregularities.
 
-\section{Policy Implications}
-Highlight implications for public health and reproductive policy coordination.
+\subsection{Heterogeneity Analysis}
 
-\section{Limitations and Future Research}
-Discuss data constraints, unobserved spillovers, and potential extensions (e.g., county-level analysis, Title X clinic mechanisms).
+To examine whether the policy effect varies across states, the baseline model is augmented with
+interaction terms of the form:
 
-% ==========================================================
-\begin{appendices}
-\chapter{Appendix: Data Construction Details}
-Include variable definitions, FIPS mappings, and API sources.
+\begin{equation}
+    Y_{st}
+    = \beta_1 \text{Policy}_{st}
+    + \beta_2 \big(\text{Policy}_{st} \times Z_s\big)
+    + X_{st}'\Gamma
+    + \alpha_s + \lambda_t + \varepsilon_{st},
+\end{equation}
 
-\chapter{Appendix: Additional Tables and Figures}
-Event-study coefficients, placebo results, robustness checks.
+where $Z_s$ denotes a time-invariant state characteristic, such as political orientation, baseline
+STI prevalence, or population density. The coefficient $\beta_2$ captures heterogeneous responses
+to the policy shock.
 
-\chapter{Appendix: Code Summary}
-List major R scripts for DID, DML, heterogeneity, SCM, and Google Trends.
-\end{appendices}
 
-% ==========================================================
+% =========================================================
+
+\section{Results}\label{sec:results}
+
+111
+
+\subsection{Baseline Estimates}
+\subsection{Dynamic Effects (Event Study)}
+\subsection{Synthetic Control Results}
+\subsection{Robustness and Sensitivity Analysis}
+\subsection{Heterogeneity Results}
+
+% =========================================================
+
+\section{Discussion}\label{sec:discussion}
+111
+
+\subsection{Interpretation and Potential Channels}
+
+Although the empirical analysis documents a clear increase in STI outcomes following the 
+post-\textit{Dobbs} abortion restrictions, the mechanisms underlying this relationship are 
+potentially complex. Classical economic reasoning provides one possible pathway. By raising the 
+expected cost of unintended pregnancy, restrictive abortion policy may reduce certain types of 
+sexual risk-taking. This mechanism is conceptually related to the framework proposed by 
+Klick and Stratmann (2003), who argue that the legalization of abortion lowered the cost of 
+unprotected sexual activity and contributed to higher STI rates. A symmetric interpretation would 
+suggest that restricting abortion access could reduce risk-taking and exert downward pressure on 
+STI transmission.
+
+However, several countervailing mechanisms operate in the opposite direction and may be more 
+relevant in practice. Reductions in access to reproductive-health services following the 
+implementation of restrictive laws can limit opportunities for STI testing, counselling, and other 
+preventive services, particularly when clinics that previously provided a broad set of sexual-
+health functions scale back operations. Behavioural adjustments may also shift in ways that do not 
+necessarily reduce STI exposure. Some individuals may alter contraceptive choices in response to 
+changes in pregnancy-related risk without making corresponding adjustments in protection against 
+STIs. In addition, states enforcing restrictive abortion laws often differ in their sexual-education 
+systems and broader public-health environments, which could shape patterns of sexual behaviour and 
+preventive practices over longer horizons.
+
+These channels imply that the direction of the overall effect is theoretically ambiguous. On the 
+one hand, higher expected pregnancy costs may reduce certain forms of risk-taking; on the other, 
+constrained access to screening, counselling, and reproductive-health infrastructure may facilitate 
+greater STI transmission. The empirical results in this study provide evidence on which of these 
+forces dominates in the post-\textit{Dobbs} context, but the mechanisms underlying the observed 
+outcomes remain multifaceted and should be interpreted with caution.
+
+\subsection{Relation to Existing Literature}
+\subsection{Policy Implications}
+
+\section{Conclusion}\label{sec:conclusion}
+\subsection{Summary}
+\subsection{Limitations}
+\subsection{Directions for Future Research}
+
+% -------------------------------------------------
+%                   REFERENCES
+% -------------------------------------------------
+\newpage
 \bibliographystyle{apalike}
 \bibliography{references}
+
+% -------------------------------------------------
+%                   APPENDIX
+% -------------------------------------------------
+\appendix
+\section{Additional Figures}
+\section{Additional Tables}
+\section{Robustness Checks}
+\section{Data Appendix}
 
 \end{document}

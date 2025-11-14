@@ -110,7 +110,7 @@ uninsured <- uninsured |>
   transmute(
     year = as.numeric(year),
     fips = norm_fips(state),
-    uninsured_pct = as.numeric(uninsured_pct)
+    uninsured_pct = as.numeric(uninsured_pct)/100
   )
 
 ### income
@@ -128,30 +128,18 @@ urate <- urate |>
   mutate(fips = norm_fips(state_fips),
          year = as.numeric(year)) |>
   group_by(fips, year) |>
-  summarise(unrate = mean(urate , na.rm = TRUE)) |>
+  summarise(unrate = mean(urate , na.rm = TRUE)/100) |>
   ungroup()
 
 ### poverty rate
-poverty <- fread(file.path(data_dir, "/ctrl_var_state/state_poverty_2010_2024.csv"))
+poverty <- fread(file.path(data_dir, "/ctrl_var_state/state_poverty_2010_2023.csv"))
 poverty <- poverty |>
   transmute(
     fips = norm_fips(state),
     year = as.numeric(year),
-    poverty_rate = as.numeric(poverty_rate)
+    poverty_rate = as.numeric(poverty_rate)/100
   )
 
-### titleX user
-titleX <- fread(file.path(data_dir, "/ctrl_var_state/state_titleX_user_2010_2023.csv"))
-
-titleX <- titleX |>
-  transmute(
-    fips = norm_fips(FIPS),
-    year = as.numeric(Year),
-    tx_user = as.numeric(Total)
-  ) |>
-  left_join(pop, by = c("fips", "year")) |>
-  mutate(titlex_rate = tx_user / pop * 1000) |>
-  select(year, fips, titlex_rate)
 
 
 #==========Merge Panel=========
@@ -171,10 +159,9 @@ panel <- y_panel |>
   left_join(demo, by = c("fips", "year")) |>
   left_join(income, by = c("fips", "year")) |>
   left_join(poverty, by = c("fips", "year")) |>
-  left_join(titleX, by = c("fips", "year")) |>
   left_join(uninsured, by = c("fips", "year")) |>
   left_join(urate, by = c("fips", "year")) |>
-  filter(cohort == 2022 | is.na(cohort)) |>. # filtrate the late-adopted states
+  filter(cohort == 2022 | is.na(cohort)) |> # filtrate the late-adopted states
   filter(year != 2020) |>
   mutate(
     event_time = year - 2022,

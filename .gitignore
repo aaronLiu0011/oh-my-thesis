@@ -50,4 +50,5 @@ data_process_script/API_KEY.txt
 
 .RDataTmp
 
-.latexmkrc
+*.tex
+thesis_main/
