@@ -1,5 +1,5 @@
 # ================================
-# Placebo Test: Pretend Treatment in 2018
+# Placebo Test: Pretend Treatment in 2016
 # ================================
 library(tidyverse)
 library(fixest)
@@ -30,9 +30,18 @@ etable(placebo_model,
        fitstat = ~n + r2,
        digits = 3)
 
-iplot(placebo_model,
-      main = "Placebo Event-Study (Fake Treatment in 2016)",
-      xlab = "Years relative to placebo treatment",
-      ylab = "Coefficient (β)",
-      col = "gray40",
-      ref.line = 0)
+png(
+  filename = "/Users/okuran/Desktop/thesis/out/placebo_event_study_sy_2016.png",
+  width = 1600, height = 1200, res = 200
+)
+
+iplot(
+  placebo_model,
+  main = "Placebo Event-Study (Fake Treatment in 2016)",
+  xlab = "Years relative to placebo treatment",
+  ylab = "Coefficient (β)",
+  col = "gray40",
+  ref.line = 0
+)
+
+dev.off()

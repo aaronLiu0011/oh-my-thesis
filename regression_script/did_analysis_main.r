@@ -18,6 +18,9 @@ gof_omit <- "IC|Log|F|Within|R2 Adj|Std.Errors|RMSE"
 
 panel_data <- read_csv(DATA_PATH, show_col_types = FALSE)
 
+panel_data <- panel_data |> filter(year != 2020)  |>
+  filter(cohort == 2022 | is.na(cohort)) # filtrate the late-adopted states
+
 # =========== models ==========
 fit_five_specs <- function(dep_var, pretty_name){
   # (1) no control
@@ -45,10 +48,11 @@ fit_five_specs <- function(dep_var, pretty_name){
   )), data = panel_data, cluster = "fips")
   
   models <- list(
-    "(1)" = m1,
-    "(2)" = m2,
-    "(3)" = m3,
-    "(4)" = m4  )
+    "Baseline (No Controls)"        = m1,
+    "Demographic Controls"          = m2,
+    "Full Controls"                 = m3,
+    "State-Specific Trends"         = m4
+  )
   
 # =========== output ==========
   html_file <- file.path(OUT_DIR, glue("did_{tolower(pretty_name)}.html"))

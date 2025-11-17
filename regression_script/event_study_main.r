@@ -8,6 +8,9 @@ library(stringr)
 
 panel_data <- read_csv("/Users/okuran/Desktop/thesis/master_data/state_panel_2010_2023.csv")
 
+panel_data <- panel_data |> filter(year != 2020)  
+
+  
 run_event_study <- function(dep_var, title_text) {
   
   formula <- as.formula(

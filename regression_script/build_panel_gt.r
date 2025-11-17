@@ -150,7 +150,7 @@ income <- income |>
     date = as.Date(month),
     year = as.integer(format(date, "%Y")),
     month = as.integer(format(date, "%m")),
-    percapita_income = as.numeric(income)
+    income_log = log(as.numeric(income))
   )
 
 

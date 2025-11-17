@@ -17,9 +17,9 @@ panel <- read_csv(DATA_PATH, show_col_types = FALSE) |>
          treated = as.integer(cohort == 2022))
 
 # ---- Define time windows ----
-pre_period  <- setdiff(2010:2021, 2020)
+pre_period  <- 2010:2021
 post_period <- 2022:2023
-plot_period <- setdiff(2010:2023, 2020)
+plot_period <- 2010:2023
 
 # ---- Identify treated states ----
 treated_states <- panel |>
@@ -175,8 +175,8 @@ write_csv(avg_effect,  file.path(OUT_DIR, "average_policy_effect.csv"))
 
 # ---- Plot aggregated effect ----
 p <- ggplot(gap_summary, aes(x = year, y = avg_gap)) +
-  geom_ribbon(aes(ymin = ci_low, ymax = ci_high), fill = "skyblue", alpha = 0.3) +
-  geom_line(color = "steelblue", size = 1.2) +
+  geom_ribbon(aes(ymin = ci_low, ymax = ci_high), fill = "grey", alpha = 0.3) +
+  geom_line(color = "black", size = 1.2) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   geom_vline(xintercept = 2022, color = "red", linetype = "dotted") +
   labs(
