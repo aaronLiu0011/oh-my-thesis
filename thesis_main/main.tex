@@ -1,16 +1,5 @@
 \documentclass{article}
-\usepackage{graphicx} % Required for inserting images
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{hyperref}
-\usepackage{booktabs}
-\usepackage{threeparttable}
-\usepackage{longtable}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{natbib}
-\bibliographystyle{aer}
-
+\input{preamble.tex}
 
 
 % =========================================================
@@ -60,74 +49,7 @@ The remainder of the thesis proceeds as follows. Section~\ref{sec:literature} re
 % =========================================================
 \section{Literature Review}\label{sec:literature}
 
-he Supreme Court's 2022 \textit{Dobbs v. Jackson} decision created an unprecedented natural experiment for studying how reproductive health policy affects sexually transmitted infection outcomes. This literature review synthesizes research across economics, public health, and epidemiology to establish theoretical frameworks, summarize empirical findings, and identify the unique contribution of studying post-Dobbs abortion restrictions on STI transmission.
-
-\subsection{Theoretical Foundations Linking Abortion Access to Sexual Behavior}
-
-The economic literature proposes two complementary mechanisms through which abortion policy affects STI outcomes. The first, articulated in Klick and Stratmann's seminal 2003 \textit{Journal of Legal Studies} paper, treats unwanted pregnancy as a cost of sexual activity \citep{klick2003abortion}. When abortion was legalized in 1969--1970 in early-adopting states and nationally following \textit{Roe v. Wade} in 1973, this cost decreased. The reduced cost generated incentives for increased sexual activity, with STIs serving as a marker of risky behavior. Using difference-in-differences methods and CDC gonorrhea and syphilis data, they found abortion legalization accounted for approximately one-fourth to one-third of average disease incidence---a substantial effect suggesting behavioral responses to policy changes.
-
-Klick and Stratmann extended this framework in their 2008 \textit{Journal of Law, Economics and Organization} paper examining parental involvement laws \citep{klick2008abortion}. If abortion access increases STIs by reducing the cost of risky sex, restrictions should decrease STIs by raising that cost. Using gonorrhea rates among older women as controls for unobserved state heterogeneity, they found parental involvement laws reduced gonorrhea rates among teenage girls by 20\% for Hispanic teens and 12\% for white teens. The racial heterogeneity in effects---with smaller, statistically insignificant reductions for Black teens---suggests the mechanism operates differently across demographic groups, possibly related to family structure differences.
-
-A deeper theoretical foundation comes from \citet{akerlof1996analysis}'s analysis of the ``reproductive technology shock.'' They argue that contraception and abortion availability fundamentally altered the equilibrium in sexual relationships. Before widespread access, sexual relations were often conditioned on implicit marriage promises if pregnancy occurred---the ``shotgun marriage'' norm. After the technology shock, women willing to use contraception or abortion no longer needed such promises. Crucially, women unwilling to use these technologies lost bargaining power; demanding marriage commitments became untenable when potential partners could seek relationships with women who made no such demands. Their analysis attributes 75\% of the increase in white out-of-wedlock first births between 1965--1990 directly to the decline in shotgun marriages. This framework suggests abortion access changes the game-theoretic structure of sexual relationships, with implications extending beyond fertility to risk-taking behavior more broadly.
-
-\subsection{How Clinic Closures Disrupt Reproductive Health Infrastructure}
-
-The theoretical prediction that abortion restrictions might \textit{decrease} STIs by raising the cost of risky sex confronts a competing mechanism: clinic closures. \citet{myers2017power}'s paper distinguished abortion access from contraception access, finding that policy environments where abortion was legal and accessible caused a 34\% reduction in first births prior to age 19 and a 63\% reduction in ``shotgun marriages.'' Importantly, Myers showed the pill's effect on family formation was much smaller than commonly believed---abortion access, not contraception alone, drove the dramatic social transformations of the 1960s and 1970s.
-
-The clinic closure mechanism operates through several channels documented by \citet{lindo2020far} in their study of Texas's HB2 law. Using variation generated when HB2 shuttered nearly half of Texas's abortion clinics, they found nonlinear distance effects: a 25-mile increase from baseline reduced abortion rates by approximately 10\%. Beyond 200 miles, additional distance had no significant effect. Critically, they identified that 59\% of clinic closure effects operated through congestion at remaining providers rather than travel distance alone. This congestion finding has direct implications for STI services, which are often co-located with abortion care.
-
-\citet{lindo2021effect}'s paper on mandatory waiting periods estimated that such requirements imposed costs approaching \$1,000 for women seeking abortions and caused a 53--69\% increase in second-trimester abortions. These incremental restrictions compound over time, progressively eroding reproductive health infrastructure.
-
-\subsection{Family Planning Funding and Direct Evidence on STI Outcomes}
-
-The most direct evidence connecting reproductive health policy to STI outcomes comes from research on family planning funding cuts. \citet{packham2017family}'s study examined Texas's 2011 decision to slash state family planning funding by 67\%, from \$111 million to \$37.9 million biennially. Using difference-in-differences comparing Texas counties that lost funding to counties outside Texas, she found teen birth rates increased by approximately 3.4\% over four years, with effects concentrated 2--3 years after initial cuts. Over 80 clinic closures resulted from the funding reductions. While focused on births, this study documents the same clinic infrastructure that provides STI screening and treatment.
-
-\citet{fischer2018exclusion}'s paper extended this analysis to three sequential Texas policies: the 2011 funding cuts, the 2013 exclusion of Planned Parenthood from Medicaid family planning, and HB2's regulatory requirements. Following Planned Parenthood's exclusion, they documented a 35\% decline in long-acting reversible contraceptive provision, a 31\% decline in injectable contraceptive use, and a 27\% increase in subsequent Medicaid-paid deliveries. Twenty-five percent of family planning clinics closed, and the number of clients served fell by 54\%.
-
-The Iowa natural experiment provides the most directly relevant evidence for STI outcomes. \citet{srinivas2022sti}'s study examined what happened when May 2017 Iowa legislation restricted funding to family planning health centers providing abortion services in four counties. Using CDC AtlasPlus data and difference-in-differences methods, they found gonorrhea rates nearly doubled: from 83 cases per 100,000 in 2016 to 153.7 per 100,000 in 2018. The rate ratio comparing post-closure to pre-closure periods was 1.99 (95\% CI: 1.67--2.37). Counties with clinic closures experienced significantly larger gonorrhea increases compared to counties without closures. Chlamydia showed smaller, statistically insignificant increases. This study directly demonstrates that when family planning centers close due to abortion-related defunding, STI outcomes deteriorate---even in counties with alternative federally qualified health centers.
-
-\subsection{Healthcare Access Pathways from Insurance to STI Detection}
-
-Healthcare access affects STI outcomes through both detection and transmission channels. \citet{aizer2007public}'s paper established that enrolling individuals in Medicaid \textit{before} illness promotes preventive care use rather than acute care seeking. For STIs, this distinction matters enormously given that chlamydia is asymptomatic in 70--80\% of women and gonorrhea frequently presents without symptoms in women. Without routine screening access, infections go undetected and continue transmitting.
-
-The ACA's Medicaid expansion provides a large-scale test of this mechanism. \citet{unger2024medicaid}'s study used difference-in-differences with National Survey of Family Growth data and found that by year three post-expansion, STI testing among women increased by 12.7 percentage points---an 86\% increase over baseline testing prevalence of 14.7\%. Effects grew over time: 1.6 percentage points in year one, 4.6 in year two, and 12.7 by year three, suggesting relationship-building with healthcare providers drives cumulative benefits. White women showed the largest gains (16.8 percentage points by year three), while Black women---who started from higher baseline testing rates---showed smaller though still positive effects.
-
-\citet{farkhad2021medicaid}'s study found Medicaid expansions associated with a 13.9\% increase in HIV diagnoses and increased PrEP use, but no increase in HIV incidence---suggesting the mechanism is improved detection rather than increased transmission. This detection-versus-transmission distinction has important implications for interpreting policy effects on reported STI rates.
-
-\citet{rietmeijer2021gonorrhea}'s analysis found that 59.9\% of counties without Medicaid expansion fell in the highest two STI rate quartiles, compared to only 42.2\% of expansion counties. This pattern could reflect either truly higher transmission in non-expansion areas or underdetection where fewer people have testing access---likely both mechanisms operate simultaneously.
-
-\subsection{STI Epidemiology and Differential Responses to Policy Changes}
-
-CDC surveillance data shows over 2.4 million chlamydia, gonorrhea, and syphilis cases reported in 2023 \citep{cdc2024sti}. Understanding which STIs might respond to abortion restrictions requires examining their distinct epidemiological characteristics. Chlamydia, with 1.65 million reported cases, is largely detected through routine screening rather than symptom-driven testing; the 70--80\% asymptomatic rate in women means case counts directly reflect screening access. Gonorrhea (601,000 cases) shows mixed presentation---more symptomatic in men, often asymptomatic in women---creating intermediate screening sensitivity. Syphilis (209,000 cases, the highest since 1950) is detected through a combination of symptomatic presentation, prenatal screening, and contact tracing, making it less directly tied to routine reproductive healthcare access.
-
-These characteristics suggest chlamydia would be most affected by policies reducing reproductive healthcare access---a prediction consistent with the Iowa study finding larger gonorrhea effects (which is more symptomatic and thus partially detected outside routine screening) while chlamydia showed smaller increases. Congenital syphilis, with nearly 3,900 cases and 279 stillbirths or infant deaths in 2023, provides a direct measure of prenatal care access effects, as half of 2018 congenital syphilis cases resulted from gaps in prenatal testing and treatment \citep{bowen2015congenital}.
-
-The COVID-19 pandemic created substantial measurement challenges for any 2020--2024 analysis. \citet{crane2021impact} documented that testing dropped 59--63\% in March--April 2020, asymptomatic screening fell from 72.5\% to 54.5\% of tests, and an estimated 27,659 chlamydia and 5,577 gonorrhea cases went undetected in the spring of 2020 alone. Trends for STI data collected during the pandemic period require cautious interpretation.
-
-\subsection{Methodological Advances in Quasi-Experimental Policy Evaluation}
-
-The credibility revolution in economics has produced sophisticated methods well-suited to studying post-Dobbs policy effects. Traditional two-way fixed effects difference-in-differences faces serious challenges when treatment timing is staggered---as with abortion bans that took effect at different times across states. \citet{goodman2021difference}'s paper showed that standard estimates decompose into weighted averages of comparisons, some using already-treated units as controls. Under heterogeneous treatment effects, this can produce severe bias; his diagnostic decomposition revealed that some comparisons receive negative weights.
-
-\citet{callaway2021difference}'s estimator addresses these problems by identifying group-time average treatment effects---comparing newly-treated units only to not-yet-treated or never-treated controls. Their approach allows for variation in treatment timing and heterogeneous effects across cohorts. Simulation studies in epidemiological applications found Callaway and Sant'Anna produced bias of only 0.64--4.14\% with dynamic treatment effects, compared to $-66.4\%$ to $-78.6\%$ bias for traditional TWFE \citep{bor2022difference}.
-
-\citet{rambachan2023more}'s paper introduced sensitivity analysis for parallel trends violations, constructing confidence sets valid under bounded departures from the identifying assumption. This addresses \citet{roth2022pretest}'s finding that standard pre-trend tests often have low power to detect meaningful violations, and conditioning on passing such tests can actually exacerbate bias.
-
-The synthetic difference-in-differences approach developed by \citet{arkhangelsky2021synthetic} combines synthetic control weighting with difference-in-differences estimation. \citet{dench2024sixty} applied this method in their study of post-Dobbs fertility effects, finding states with abortion bans experienced a 2.3\% increase in births relative to what would have occurred without bans. Effects were larger for Hispanic women (3.7\%), unmarried women (3.5\%), and women without college education (3.1\%)---demographic patterns consistent with differential access to out-of-state abortion care.
-
-\subsection{The Post-Dobbs Natural Experiment and This Thesis's Contribution}
-
-The existing literature establishes competing theoretical predictions. The Klick and Stratmann mechanism suggests abortion restrictions could \textit{decrease} STIs by raising the cost of risky sexual behavior. The clinic closure mechanism, documented by Fischer and colleagues and directly evidenced in the Iowa study, suggests restrictions could \textit{increase} STIs by eliminating reproductive health infrastructure that provides screening and treatment. The net effect is an empirical question that the post-Dobbs natural experiment can address.
-
-Several features make this study valuable. First, the magnitude of policy change is unprecedented---complete abortion bans in over a dozen states, compared to the incremental restrictions studied previously. Second, substantial geographic variation exists in both treatment intensity and timing. Third, the clarity of treatment timing (centered on June 24, 2022) facilitates clean identification. Fourth, no prior research has systematically examined STI outcomes following Dobbs using the methodological advances now available.
-
-This thesis fills that gap by testing whether the behavioral mechanism (predicting STI decreases with restrictions) or the healthcare access mechanism (predicting STI increases) dominates. The heterogeneity in post-Dobbs policy environments---from total bans to states that expanded abortion access---combined with heterogeneity-robust difference-in-differences methods allows credible causal identification.
-
-\subsection{Summary}
-
-The literature establishes clear theoretical frameworks, substantial empirical precedent, and appropriate methodological tools for studying how abortion restrictions affect STI outcomes. Klick and Stratmann demonstrated behavioral responses to abortion policy through STI markers. The family planning literature, particularly Fischer and colleagues on Texas and Srinivas and colleagues on Iowa, documented that clinic closures---whether from funding cuts or regulation---increase STI rates by eliminating healthcare infrastructure. The healthcare access literature showed insurance coverage substantially increases STI testing, with effects growing over time. Modern difference-in-differences methods provide tools for credible causal inference with staggered policy adoption.
-
-The post-Dobbs environment provides an unprecedented opportunity to identify which mechanism dominates when abortion restrictions are severe and widespread. Evidence from Iowa suggests the healthcare access mechanism will prevail, predicting STI increases in states with abortion bans---but the scale and nature of post-Dobbs restrictions may generate different patterns than the incremental restrictions studied previously. This thesis contributes the first systematic evidence on this question using state-of-the-art econometric methods applied to the largest natural experiment in reproductive health policy in fifty years.
-
+\input{literature_review.tex}
 
 % =========================================================
 
@@ -150,7 +72,7 @@ Other states adopted new restrictions in the months following the ruling, while 
 
 \subsection{STI Trends and Public Health Framework}
 
-STIs are tracked through a federal--state surveillance framework that records diagnoses, demographic characteristics, and case counts at the state level. From an economic perspective, STI incidence reflects both the demand side (behavioural risk-taking, screening decisions, healthcare access) and the supply side (availability of sexual health services, testing capacity, and reporting infrastructure). These determinants vary across states because of differences in demographics, income distribution, insurance coverage, and the density of clinics providing reproductive and preventive care.  
+STIs are tracked through a federal--state surveillance framework that records diagnoses, demographic characteristics, and case counts at the state level. From an economic perspective, STI incidence reflects both the demand side (behavioural risk-taking, screening decisions, healthcare access) and the supply side (availability of sexual health services, testing capacity, and reporting infrastructure). These determinants vary across states because of differences in demographics, income distribution, insurance coverage, and the density of clinics providing reproductive and preventive care. 
 
 \begin{figure}
     \centering
@@ -161,7 +83,7 @@ STIs are tracked through a federal--state surveillance framework that records di
 \begin{figure}[htbp]
 \centering
 
-\begin{subfigure}{0.8\textwidth}
+\begin{subfigure}{0.6\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/ch_index_diff.png}
     \caption{Chlamydia}
@@ -169,7 +91,7 @@ STIs are tracked through a federal--state surveillance framework that records di
 
 \vspace{6pt}
 
-\begin{subfigure}{0.8\textwidth}
+\begin{subfigure}{0.6\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/go_index_diff.png}
     \caption{Gonorrhea}
@@ -177,7 +99,7 @@ STIs are tracked through a federal--state surveillance framework that records di
 
 \vspace{6pt}
 
-\begin{subfigure}{0.8\textwidth}
+\begin{subfigure}{0.6\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/sy_index_diff.png}
     \caption{Syphilis}
@@ -415,14 +337,12 @@ This study has several limitations that should be considered when interpreting t
 \newpage
 \bibliographystyle{apalike}
 \bibliography{references}
+\newpage
 
 % -------------------------------------------------
 %                   APPENDIX
 % -------------------------------------------------
 \appendix
-\section{Additional Figures}
-\section{Additional Tables}
-\section{Robustness Checks}
 \section{Data Appendix}
 
 \end{document}
