@@ -1,15 +1,171 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{hyperref}
-\usepackage{booktabs}
-\usepackage{threeparttable}
-\usepackage{longtable}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{natbib}
-\bibliographystyle{aer}
+% =========================================================
+% DOCUMENT CLASS AND BASIC SETUP
+% =========================================================
+\documentclass[12pt,letterpaper,oneside]{article}
+
+% =========================================================
+% PAGE LAYOUT AND GEOMETRY
+% =========================================================
+\usepackage[
+    top=1in,
+    bottom=1in,
+    left=1.5in,
+    right=1in,
+    includeheadfoot
+]{geometry}
+
+% =========================================================
+% FONT AND TEXT FORMATTING
+% =========================================================
+\usepackage[T1]{fontenc}           % Better font encoding
+\usepackage[utf8]{inputenc}        % UTF-8 input encoding
+\usepackage{lmodern}               % Latin Modern fonts (better than CM)
+\usepackage{microtype}             % Improved typography
+\usepackage{setspace}              % Line spacing control
+\doublespacing                     % Double spacing for thesis
+
+% =========================================================
+% MATHEMATICS
+% =========================================================
+\usepackage{amsmath}               % AMS math environments
+\usepackage{amssymb}               % AMS math symbols
+\usepackage{amsthm}                % Theorem environments
+\usepackage{mathtools}             % Extension to amsmath
+
+% =========================================================
+% GRAPHICS AND FIGURES
+% =========================================================
+\usepackage{graphicx}              % Include graphics
+\usepackage{float}                 % Better float placement
+\usepackage{subcaption}            % Subfigures
+\usepackage[labelformat=simple]{caption}  % Caption formatting
+\captionsetup{
+    font=small,
+    labelfont=bf,
+    format=hang,
+    justification=justified,
+    singlelinecheck=false
+}
+\renewcommand\thesubfigure{(\alph{subfigure})}  % Subfigure labels (a), (b), etc.
+
+% =========================================================
+% TABLES
+% =========================================================
+\usepackage{booktabs}              % Professional-quality tables
+\usepackage{tabularx}              % Extended tabular environment
+\usepackage{multirow}              % Multirow cells in tables
+\usepackage{longtable}             % Tables spanning multiple pages
+\usepackage{threeparttable}        % Tables with notes
+\usepackage{array}                 % Extended array/tabular
+
+% =========================================================
+% BIBLIOGRAPHY AND CITATIONS
+% =========================================================
+\usepackage[authoryear,round,comma]{natbib}  % Author-year citations
+\bibliographystyle{aer}            % AER bibliography style
+\setcitestyle{aysep={}}            % Remove comma before year
+
+% =========================================================
+% CROSS-REFERENCES AND HYPERLINKS
+% =========================================================
+\usepackage[dvipsnames]{xcolor}    % Color support
+\usepackage{url}                   % URL formatting
+\usepackage{hyperref}              % Hyperlinks (load near end)
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+    bookmarksnumbered=true,
+    pdfstartview=FitH,
+    pdfpagemode=UseOutlines
+}
+\usepackage[capitalise,noabbrev]{cleveref}  % Smart cross-references
+
+% =========================================================
+% SECTION FORMATTING
+% =========================================================
+\usepackage{titlesec}              % Customize section headings
+\titleformat{\section}
+    {\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+    {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+    {\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% =========================================================
+% TABLE OF CONTENTS FORMATTING
+% =========================================================
+\usepackage{tocloft}               % TOC formatting
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}  % Dots in TOC
+\setcounter{tocdepth}{3}           % Include subsubsections in TOC
+\setcounter{secnumdepth}{3}        % Number subsubsections
+
+% =========================================================
+% HEADER AND FOOTER
+% =========================================================
+\usepackage{fancyhdr}              % Custom headers/footers
+\pagestyle{fancy}
+\fancyhf{}                         % Clear all header/footer fields
+\fancyhead[R]{\thepage}            % Page number in header right
+\fancyhead[L]{\nouppercase{\leftmark}}  % Section name in header left
+\renewcommand{\headrulewidth}{0.4pt}    % Header rule
+\renewcommand{\footrulewidth}{0pt}      % No footer rule
+
+% Redefine plain page style for chapter pages
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% =========================================================
+% LIST FORMATTING
+% =========================================================
+\usepackage{enumitem}              % Customize lists
+\setlist{nosep}                    % Reduce spacing in lists
+
+% =========================================================
+% MISCELLANEOUS PACKAGES
+% =========================================================
+\usepackage{appendix}              % Appendix formatting
+\usepackage{pdflscape}             % Landscape pages
+\usepackage{rotating}              % Rotate figures/tables
+\usepackage{afterpage}             % Execute commands after page break
+
+% =========================================================
+% CUSTOM COMMANDS AND ENVIRONMENTS
+% =========================================================
+% Theorem-like environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+% Custom spacing for equations
+\AtBeginDocument{
+    \setlength{\abovedisplayskip}{12pt}
+    \setlength{\belowdisplayskip}{12pt}
+    \setlength{\abovedisplayshortskip}{6pt}
+    \setlength{\belowdisplayshortskip}{6pt}
+}
+
+% =========================================================
+% PDF METADATA
+% =========================================================
+\hypersetup{
+    pdftitle={The Effect of Post-Dobbs Abortion Restrictions on Sexually Transmitted Infection Outcomes},
+    pdfauthor={Your Name},
+    pdfsubject={Economics Thesis},
+    pdfkeywords={abortion policy, STI outcomes, Dobbs decision, difference-in-differences}
+}
 
 
 
