@@ -157,6 +157,18 @@ urate <- urate |>
   summarise(unrate = mean(urate , na.rm = TRUE)/100) |>
   ungroup()
 
+### abortion access
+abortion_access <- fread(file.path(data_dir, "/ctrl_var_state/state_abortion_access_2010_2023.csv")
+) |>
+  transmute(
+    fips = norm_fips(state),
+    year = as.numeric(year),
+    distance = pop_weighted_distance,
+    log_distance = log_distance,
+    asp = pop_weighted_asp,
+    distance_bin = as.character(distance_bin)
+  )
+
 ### COVID case
 covid_case <- fread(file.path(data_dir, "/ctrl_var_state/state_covid_cases_2020_2023.csv"))
 covid_case <- covid_case |>
@@ -195,9 +207,12 @@ panel <- y_panel |>
   left_join(uninsured, by = c("fips", "year")) |>
   left_join(urate, by = c("fips", "year")) |>
   left_join(covid_yearly, by = c("fips", "year")) |>
+  left_join(abortion_access, by = c("fips", "year")) |>
+  
   mutate(
     covid_cases_per_100k = replace_na(covid_cases_per_100k, 0)
   ) |>
+  filter(!(fips %in% c("02", "15"))) |> # filtrate Hawaii and Alaska
   filter(cohort == 2022 | is.na(cohort)) |> # filtrate the late-adopted states
   mutate(
     event_time = year - 2022,
@@ -232,8 +247,8 @@ desc_vars <- panel |>
     share_age_15_44, share_male, share_black, share_married_15p,
     # Socioeconomic
     share_hs_plus_25p, uninsured_pct, unrate, poverty_rate, income,
-    # COVID
-    covid_cases_per_100k
+    # abortion access
+    distance
   )
 
 datasummary_skim(
@@ -249,7 +264,7 @@ datasummary_balance(
     select(sy_index, go_index, ch_index, 
            share_age_15_44, share_male, share_black, share_married_15p,
            share_hs_plus_25p, uninsured_pct, unrate, poverty_rate, income,
-           covid_cases_per_100k, treated),
+           distance, treated),
   output = "desc_stats_by_treatment.html",
   title = "Descriptive Statistics by Treatment Status",
   notes = "Treated = 1 for states that banned abortion in 2022",
@@ -270,7 +285,7 @@ desc_data <- panel |>
     `Unemployment Rate` = unrate,
     `Poverty Rate` = poverty_rate,
     `Income per Capita` = income,
-    `COVID Cases per 100k` = covid_cases_per_100k
+    `Population-weighted Distance to Abortion Services` = distance
   )
 
 datasummary_skim(

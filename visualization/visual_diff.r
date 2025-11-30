@@ -102,11 +102,6 @@ plot_diff_map <- function(var, var_label) {
       ylim = c(150000, 3300000)
     ) +
     
-    labs(
-      title   = paste0("Change in ", var_label, " (2023 − 2021)"),
-      caption = "Purple = decrease; Orange = increase; dot pattern = Treated states"
-    ) +
-    
     theme_void() +
     theme(
       plot.title   = element_text(size = 16, face = "bold"),

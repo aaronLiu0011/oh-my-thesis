@@ -30,7 +30,7 @@ fit_dml_spec <- function(dep_var, pretty_name){
   x <- c(
     "share_age_15_44", "share_male", "share_black",
     "share_married_15p", "share_hs_plus_25p",
-    "unrate", "poverty_rate", "uninsured_pct", "income"
+    "unrate", "poverty_rate", "uninsured_pct", "income", "distance"
   )
   
   data_ml <- panel_data |>

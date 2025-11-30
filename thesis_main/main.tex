@@ -20,31 +20,7 @@
 
 \section{Introduction}
 
-\subsection{Research Question}
-
-This study examines whether the abortion restrictions enacted in the aftermath of the \textit{Dobbs v.~Jackson Women’s Health Organization} ruling produced measurable effects on sexually transmitted infection (STI) outcomes in the United States. The \textit{Dobbs} decision fundamentally altered the institutional environment surrounding reproductive health by removing federal constitutional protection for abortion and returning regulatory authority to individual states. Several states responded by enforcing restrictive laws almost immediately, while others maintained the status quo. This abrupt divergence provides a policy intervention that is plausibly exogenous with respect to underlying STI trends.  
-
-The central question is whether these restrictive abortion policies contributed to changes in the incidence of major reportable STIs—including syphilis, gonorrhea, and chlamydia—during the two years following the ruling. STIs have exhibited sustained growth in the United States over the past decade, and recent policy debates have highlighted the importance of reproductive-health infrastructure and sexual health services in shaping disease transmission. Despite these broader concerns, empirical evidence linking abortion policy to STI trends remains limited, and the potential spillovers of reproductive policy into other dimensions of public health are still not well understood. 
-
-This study seeks to provide a systematic assessment of whether the policy shift in 2022 induced observable departures from the counterfactual STI trajectories that states would have followed in the absence of the ruling. The analysis is grounded in state-year panel data spanning more than a decade before and after the decision, allowing for the estimation of both average treatment effects and dynamic changes over time. By bringing together policy variation, detailed public health data, and modern causal inference methods, the study aims to clarify whether the post- \textit{Dobbs} abortion restrictions have had unintended consequences for sexual health outcomes.
-
-
-\subsection{Motivation}
-
-Reproductive-health policies often influence a wide range of behavioural and institutional responses beyond fertility outcomes. Following the \textit{Dobbs} decision, substantial public debate has focused on access to reproductive care, the reconfiguration of healthcare systems, and potential spillovers to related health behaviours. At the same time, STI rates in the United States have exhibited persistent growth in the past decade, with notable heterogeneity across states. Despite these developments, empirical evidence on the causal link between post-\textit{Dobbs} abortion restrictions and STI outcomes remains limited. The motivation of this study is to fill this gap by providing credible causal estimates based on long-term state-level panel data. 
-
-\subsection{Contribution}
-
-This study contributes to the literature in several ways. First, it provides new causal evidence on how abortion restrictions influence sexual-health outcomes, an area that has received limited empirical attention. While existing work has examined the effects of reproductive-health policy on fertility, abortion incidence, and related services, the potential spillovers onto STI outcomes have not been systematically analysed. Second, the study constructs a state-year panel from 2010 to 2023 that combines surveillance data, demographic indicators, and socioeconomic controls. This dataset supports both cross-state comparisons and dynamic analysis over an extended period. Third, the empirical design integrates Difference-in-Differences estimation, event-study specifications, and synthetic control methods. This combination provides a transparent framework for assessing the robustness of the findings and evaluating the credibility of identification. By triangulating evidence across complementary approaches, the analysis aims to produce a coherent assessment of the policy’s impact.
-
-\subsection{Summary of Findings}
-
-The results indicate that ...
-
-
-\subsection{Roadmap}
-
-The remainder of the thesis proceeds as follows. Section~\ref{sec:literature} reviews the relevant literature on abortion policy, sexually transmitted infections, and public health outcomes. Section~\ref{sec:institution} describes the institutional and policy background relevant to the \textit{Dobbs} ruling and the variation in state-level abortion restrictions. Section~\ref{sec:data} presents the data sources, variable construction, and descriptive statistics. Section~\ref{sec:strategy} outlines the empirical strategy, including the baseline Difference-in- Differences model, event-study framework, and robustness checks. Section~\ref{sec:results} reports the main results. Section~\ref{sec:discussion} discusses the broader interpretation of the findings and situates them within the existing literature. Section~\ref{sec:conclusion} concludes.
+\input{introduction.tex}
 
 % =========================================================
 \section{Literature Review}\label{sec:literature}
@@ -56,90 +32,15 @@ The remainder of the thesis proceeds as follows. Section~\ref{sec:literature} re
 \section{Institutional Background}
 \label{sec:institution}
 
-This section situates the empirical analysis within the institutional structure shaped by the post-\textit{Dobbs} abortion policy environment. The removal of federal protection altered the relative costs and constraints associated with fertility control, thereby modifying the incentives governing sexual behaviour, healthcare utilization, and cross-state mobility. Because sexually transmitted infections (STIs) respond to both behavioural choices and access to medical services, the sharp policy discontinuities generated by \textit{Dobbs} constitute a relevant institutional shock with measurable implications for public health outcomes. Figures~\ref{fig:policy_map} and \ref{fig:sti_map} summarize these institutional features by depicting the distribution of state abortion laws and baseline STI incidence.
+This section situates the empirical analysis within the institutional structure shaped by the post-\textit{Dobbs} abortion policy environment. The removal of federal protection altered the relative costs and constraints associated with fertility control, thereby modifying the incentives governing sexual behaviour, healthcare utilization, and cross-state mobility. Because sexually transmitted infections (STIs) respond to both behavioural choices and access to medical services, the sharp policy discontinuities generated by \textit{Dobbs} constitute a relevant institutional shock with measurable implications for public health outcomes. 
 
-\subsection{Abortion Policy After \textit{Dobbs}}
-
-The Supreme Court’s 2022 decision in \textit{Dobbs v. Jackson Women’s Health Organization} rescinded the federal constitutional right to abortion and returned full regulatory authority to the states. This reassignment produced large cross-state variation in the effective price of terminating a pregnancy, both in monetary and non-monetary terms (e.g., travel costs, waiting time, legal risk, and uncertainty). From an economic perspective, these changes alter the feasible set of fertility-control options available to individuals and reshape the intertemporal trade-offs between sexual activity, contraceptive behaviour, and reproductive planning.  
-
-States responded heterogeneously. Some activated pre-existing bans, sharply raising the cost of abortion, while others maintained permissive regimes. The resulting divergence generates a clear treated--control structure in which otherwise comparable states face different institutional constraints on reproductive choice. Because these changes were abrupt and externally imposed, they provide a quasi-experimental setting for identifying behavioural and health-related responses.
-
-\subsection{Trigger Laws and State-Level Variation}
-
-Prior to \textit{Dobbs}, several states had enacted ``trigger laws'' designed to take effect immediately upon the removal of federal protections. These statutes implemented near-total bans or stringent gestational limits, substantially raising the marginal cost of obtaining an abortion within the state. From a behavioural standpoint, such policies modify the relative prices of precaution, risk-taking, and healthcare substitution. Individuals may respond by adjusting sexual behaviour, shifting toward less protected intercourse, or reallocating healthcare demand across states.  
-
-Other states adopted new restrictions in the months following the ruling, while a separate group preserved broad legal access. This staggered implementation introduces cross-sectional and temporal variation that is economically meaningful: variation in policy intensity interacts with mobility frictions, local clinic capacity, and the substitutability of out-of-state services. As illustrated in Figure~\ref{fig:policy_map}, these differences form the core source of identifying variation used in the empirical strategy.
-
-\subsection{STI Trends and Public Health Framework}
-
-STIs are tracked through a federal--state surveillance framework that records diagnoses, demographic characteristics, and case counts at the state level. From an economic perspective, STI incidence reflects both the demand side (behavioural risk-taking, screening decisions, healthcare access) and the supply side (availability of sexual health services, testing capacity, and reporting infrastructure). These determinants vary across states because of differences in demographics, income distribution, insurance coverage, and the density of clinics providing reproductive and preventive care. 
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1\textwidth]{figures/std_trends_barplot.png}
-    \caption{State-Year Trends in STI Incidence (2010–2023)}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-
-\begin{subfigure}{0.6\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figures/ch_index_diff.png}
-    \caption{Chlamydia}
-\end{subfigure}
-
-\vspace{6pt}
-
-\begin{subfigure}{0.6\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figures/go_index_diff.png}
-    \caption{Gonorrhea}
-\end{subfigure}
-
-\vspace{6pt}
-
-\begin{subfigure}{0.6\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figures/sy_index_diff.png}
-    \caption{Syphilis}
-\end{subfigure}
-
-\caption{Changes in STD Incidence Between 2021 and 2023}
-\label{fig:std_diff_all}
-\end{figure}
-
+\input{institutional_backgroud.tex}
 % =========================================================
 \section{Data}
 \label{sec:data}
 
-This section describes the construction of the state--year panel covering the period 2010--2023. The dataset combines information on sexually transmitted infection (STI) outcomes, abortion policy environments, and a set of socioeconomic and demographic indicators. The integration of these sources produces a balanced panel with consistent measurement across states and time, providing the empirical foundation for identifying the effects of post-\textit{Dobbs} abortion restrictions.
+\input{data.tex}
 
-\subsection{Data Sources}
-
-The primary outcome measures come from the Centers for Disease Control and Prevention (CDC) annual surveillance reports, which provide state-level incidence rates for major notifiable STIs. Information on abortion policies is assembled from statutory records, legal documents concerning the activation of trigger laws, and state-level implementation timelines following the \textit{Dobbs} decision. Demographic and socioeconomic variables are drawn from the American Community Survey (ACS), the Bureau of Labor Statistics (BLS), and the Small Area Income and Poverty Estimates (SAIPE) program. Additional harmonized population counts and age distributions are obtained from IPUMS NHGIS. Together, these sources supply a consistent and well-documented set of variables for empirical analysis.
-
-\subsection{Outcome Variables}
-
-The analysis focuses on three commonly reported infections: syphilis, gonorrhea, and chlamydia. For each infection, the CDC reports confirmed case counts and incidence rates per 100,000 population. Incidence rates are used to standardize across states with different population sizes. Some specifications employ logarithmic transformations of incidence measures to reduce the influence of skewness and facilitate interpretation in proportional terms.
-
-\subsection{Treatment Variable}
-
-The treatment variable indicates whether a state enforced a restrictive abortion statute in a given year. A state enters the treated group in the first year in which its trigger law or other prohibition became legally operative. Non-restrictive states form the control group throughout the sample window. The coding captures the effective timing of legal implementation rather than legislative announcements and excludes states whose adoption occurred too late to furnish adequate pre-treatment observations. This definition corresponds directly to the quasi-experimental variation underlying the empirical design.
-
-\subsection{Socioeconomic and Demographic Controls}
-
-To account for time-varying factors that may influence STI transmission or correlate with policy adoption, the regression models include controls for population age structure, gender composition, racial composition, educational attainment, unemployment, and poverty. These variables are harmonized to the state--year level using ACS, SAIPE, and BLS releases. Their inclusion serves to capture changes in demographic risk profiles and economic conditions that could affect STI outcomes independently of abortion policy.
-
-\subsection{Sample Construction and Cleaning}
-
-All data sources are merged by standardized FIPS codes. Observations with incomplete or implausible values are removed following consistent criteria. Missing values for controls are handled through established practices, including interpolation or exclusion depending on the variable’s stability and relevance. States with late adoption of abortion restrictions are excluded from the main treated--control contrast to ensure sufficient pre-treatment periods for Difference-in-Differences estimation. The final dataset is a balanced panel of states observed continuously from 2010 to 2023.
-
-\subsection{Descriptive Statistics}
-
-Descriptive statistics document substantial cross-state heterogeneity in STI incidence, demographic structure, and socioeconomic conditions. The geographic distribution of baseline STI burdens and statutory abortion regimes, illustrated in Section~\ref{sec:institution}, highlights the coexistence of persistent structural differences across states. These patterns justify the use of fixed-effects estimators that absorb time-invariant heterogeneity and motivate the examination of how post-\textit{Dobbs} restrictions shifted STI trajectories relative to their counterfactual evolution.
-
-\input{tables/desc_stats.tex}
 % =========================================================
 
 \section{Empirical Strategy}\label{sec:strategy}
@@ -343,6 +244,10 @@ This study has several limitations that should be considered when interpreting t
 %                   APPENDIX
 % -------------------------------------------------
 \appendix
-\section{Data Appendix}
+\section{Appendix}
+\input{tables/law_note.tex}
+
+\input{tables/desc_stats_all.tex}
+
 
 \end{document}
