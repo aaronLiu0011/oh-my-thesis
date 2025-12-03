@@ -77,8 +77,6 @@ scale_y_continuous(
 # 4. 主题和标题
 # -----------------------
 labs(
-  title = "STD Trends in the United States (2010–2023)",
-  subtitle = "Bar: individual STDs | Line: combined STD index",
   x = "Year",
   fill = "Disease"
 ) +

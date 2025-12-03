@@ -130,6 +130,6 @@ run_placebo <- function(dep_var){
 # ------------------------------------
 # Run for ch_index, go_index, std_index
 # ------------------------------------
-dep_var_list <- c("ch_index", "go_index", "std_index")
+dep_var_list <- c("ch_index", "go_index", "sy_index")
 
 placebo_results <- lapply(dep_var_list, run_placebo)

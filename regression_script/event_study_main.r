@@ -19,7 +19,7 @@ run_event_study <- function(dep_var, title_text) {
       " ~ i(event_time, treated, ref = -1) + ",
       "share_age_15_44 + share_male + share_black + ",
       "share_married_15p + share_hs_plus_25p + unrate + poverty_rate + uninsured_pct + ",
-      "log(income) + distance | fips + year"
+      "log(income) | fips + year"
     )
   )
   
@@ -52,7 +52,7 @@ run_event_study <- function(dep_var, title_text) {
     geom_line(aes(y = ci_lower), linetype = "dashed", color = "black") +
     geom_line(size = 1, color = "black") +
     scale_x_continuous(breaks = seq(min(plot_data$time), max(plot_data$time), by = 1)) +
-    labs(title = paste0("Event Study: Effect of Abortion Ban on ", title_text),
+    labs(
       x = "Periods relative to treatment",
       y = "Coefficient"
     ) +
@@ -69,7 +69,7 @@ run_event_study <- function(dep_var, title_text) {
       axis.title.y = element_text(margin = margin(r = 10))
     )
   
-  ggsave(filename = paste0("/Users/okuran/Desktop/thesis/out/event_study_plot_", title_text, ".png"),
+  ggsave(filename = paste0("/Users/okuran/Desktop/thesis/out/event_study/event_study_plot_", title_text, ".png"),
          plot = p,
          width = 6, height = 4, dpi = 300)
   
@@ -93,4 +93,7 @@ run_event_study("sy_index", "Syphilis")
 run_event_study("go_index", "Gonorrhea")
 run_event_study("ch_index", "Chlamydia")
 run_event_study("std_index", "STDs")
+run_event_study("distance", "Distance")
+#run_event_study("log_distance", "Log_Distance")
+
 

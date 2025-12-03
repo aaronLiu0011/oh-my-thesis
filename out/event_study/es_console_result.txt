@@ -1,0 +1,45 @@
+> run_event_study("sy_index", "Syphilis")
+NOTE: 1 observation removed because of NA values (LHS: 1).
+Wald test, H0: joint nullity of event_time::-9:treated, event_time::-8:treated, event_time::-7:treated, event_time::-6:treated, event_time::-5:treated, event_time::-4:treated and event_time::-3:treated
+ stat = 1.18798, p-value = 0.307981, on 7 and 470 DoF, VCOV: Clustered (fips).
+=== Parallel Trend Test: sy_index ===
+F Statistic: 1.187977 
+P Value: 0.3079812 
+Conclusion: The parallel trend assumption cannot be rejected ✓
+Warning message:
+Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+generated. 
+> run_event_study("go_index", "Gonorrhea")
+NOTE: 1 observation removed because of NA values (LHS: 1).
+Wald test, H0: joint nullity of event_time::-9:treated, event_time::-8:treated, event_time::-7:treated, event_time::-6:treated, event_time::-5:treated, event_time::-4:treated and event_time::-3:treated
+ stat = 0.728016, p-value = 0.6483, on 7 and 470 DoF, VCOV: Clustered (fips).
+=== Parallel Trend Test: go_index ===
+F Statistic: 0.7280164 
+P Value: 0.6483004 
+Conclusion: The parallel trend assumption cannot be rejected ✓
+> run_event_study("ch_index", "Chlamydia")
+NOTE: 1 observation removed because of NA values (LHS: 1).
+Wald test, H0: joint nullity of event_time::-9:treated, event_time::-8:treated, event_time::-7:treated, event_time::-6:treated, event_time::-5:treated, event_time::-4:treated and event_time::-3:treated
+ stat = 1.98305, p-value = 0.055757, on 7 and 470 DoF, VCOV: Clustered (fips).
+=== Parallel Trend Test: ch_index ===
+F Statistic: 1.983051 
+P Value: 0.05575707 
+Conclusion: The parallel trend assumption cannot be rejected ✓
+> run_event_study("std_index", "STDs")
+NOTE: 1 observation removed because of NA values (LHS: 1).
+Wald test, H0: joint nullity of event_time::-9:treated, event_time::-8:treated, event_time::-7:treated, event_time::-6:treated, event_time::-5:treated, event_time::-4:treated and event_time::-3:treated
+ stat = 1.15423, p-value = 0.327904, on 7 and 470 DoF, VCOV: Clustered (fips).
+=== Parallel Trend Test: std_index ===
+F Statistic: 1.154234 
+P Value: 0.3279038 
+Conclusion: The parallel trend assumption cannot be rejected ✓
+> run_event_study("distance", "Distance")
+Wald test, H0: joint nullity of event_time::-9:treated, event_time::-8:treated, event_time::-7:treated, event_time::-6:treated, event_time::-5:treated, event_time::-4:treated and event_time::-3:treated
+ stat = 1.07042, p-value = 0.381315, on 7 and 471 DoF, VCOV: Clustered (fips).
+=== Parallel Trend Test: distance ===
+F Statistic: 1.07042 
+P Value: 0.3813146 
+Conclusion: The parallel trend assumption cannot be rejected ✓
