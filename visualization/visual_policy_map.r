@@ -66,11 +66,11 @@ mainland_map$policy_intensity[is.na(mainland_map$policy_intensity)] <- "0"
 # 4. Colors
 # -------------------------------------------------
 kff_colors <- c(
-  "4"="#D62728",
-  "3"="#FF7F0E",
-  "2"="#add8e6",
-  "1"="#1f77b4",
-  "0"="#144c73"
+  "4" = "#740938",      # Purple - Total ban
+  "3" = "#FF7F0E",      # Orange - Limit 6-12 weeks
+  "2" = "#fddbc7",      # Light orange/peach - Limit 18-22 weeks
+  "1" = "#1f77b4",      # Medium blue - Limit at viability
+  "0" = "#144c73"       # Dark blue - No limit
 )
 
 # -------------------------
@@ -94,18 +94,12 @@ p_main <- ggplot() +
     aes(fill = factor(policy_intensity, levels = c("4","3","2","1","0"))),
     color = "white", size = 0.3
   ) +
-  geom_sf_pattern(
+  geom_sf(
     data = mainland_map |> filter(treated_year == 2022),
     aes(geometry = geometry),
-    pattern = "pch",
-    pattern_shape = 20,
-    pattern_fill = "black",
-    pattern_colour = "black",
-    pattern_alpha = 0.7,
-    pattern_density = 0.5,
-    pattern_spacing = 0.035,
     fill = NA,
-    color = NA
+    color = "red",
+    linewidth = 0.8
   ) +
   geom_sf_label(
     data = df_large,

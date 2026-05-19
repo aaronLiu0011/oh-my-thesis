@@ -51,7 +51,6 @@ plot_event_study <- function(model, title_text, out_png){
     geom_line(size = 1, color = "black") +
     scale_x_continuous(breaks = seq(min(est_clean$time), max(est_clean$time), 1)) +
     labs(
-      title = title_text,
       x = "Periods relative to treatment",
       y = "Coefficient"
     ) +
@@ -68,7 +67,7 @@ plot_event_study <- function(model, title_text, out_png){
       axis.title.y = element_text(margin = margin(r = 10))
     )
   
-  ggsave(out_png, p, width = 10, height = 7, dpi = 300)
+  ggsave(out_png, p, width = 6, height = 4, dpi = 300)
   message("✔ Saved plot: ", out_png)
   
   return(p)

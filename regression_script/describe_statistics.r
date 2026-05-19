@@ -4,6 +4,10 @@ library(modelsummary)
 DATA_PATH <- "/Users/okuran/Desktop/thesis/master_data/state_panel_2010_2023.csv"
 panel <- read_csv(DATA_PATH, show_col_types = FALSE)
 
+panel <- panel |> filter(year != 2020)  |> filter(cohort == 2022 | is.na(cohort))
+
+#=======================
+
 desc_vars <- panel |>
   filter(year == 2019) |>           # baseline year
   select(
@@ -66,7 +70,7 @@ desc_table <- desc_table |>
 
 datasummary_df(
   desc_table,
-  output = "/Users/okuran/Desktop/thesis/out/desc_stats_treat_vs_control_2019.html",
+  output = "/Users/okuran/Desktop/thesis/out/desc_stats/desc_stats_treat_vs_control_2019.html",
   title = "Descriptive Statistics by Treatment Status",
   fmt = 3
 )
@@ -135,7 +139,7 @@ desc_table <- desc_table |>
 
 datasummary_df(
   desc_table,
-  output = "/Users/okuran/Desktop/thesis/out/desc_stats_treat_vs_control_all.html",
+  output = "/Users/okuran/Desktop/thesis/out/desc_stats/desc_stats_treat_vs_control_all.html",
   title = "Descriptive Statistics by Treatment Status",
   fmt = 3
 )

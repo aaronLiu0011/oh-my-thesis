@@ -21,6 +21,13 @@ panel_data <- read_csv(DATA_PATH, show_col_types = FALSE)
 panel_data <- panel_data |> filter(year != 2020)  |>
   filter(cohort == 2022 | is.na(cohort)) # filtrate the late-adopted states
 
+summary_tbl <- data.frame(
+  variable = names(panel_data),
+  n_obs = sapply(panel_data, function(x) sum(!is.na(x)))
+)
+
+print(summary_tbl)
+
 # =========== models ==========
 fit_five_specs <- function(dep_var, pretty_name){
   # (1) no control
